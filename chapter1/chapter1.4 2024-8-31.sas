@@ -30,8 +30,8 @@ data &data;
     	if (AGE17X >= 65 and AGE17X < 75) then AGE_65_74 = 1; else AGE_65_74 = 0;
     	if (AGE17X >= 75 and AGE17X <= 85) then AGE_75_85 = 1; else AGE_75_85 = 0;
 	
-	*Categorize sex variable;
-	if SEX=2 then MALE=0; else if SEX = 1 then MALE=1;		*Sex: 1=MALE 2=FEMALE;					
+	*Categorize sex variable (Sex: 1=MALE 2=FEMALE);
+	if SEX=2 then MALE=0; else if SEX = 1 then MALE=1;				
 
 	*Categorize race/ethnicity variable (reference group: RACE_WHITE);
 	if RACETHX=1 then RACE_HISPANIC=1; else RACE_HISPANIC=0;	
@@ -45,7 +45,7 @@ data &data;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
 
-	*Categorize health conditions variable (reference group: REGION_SOUTH);
+	*Categorize health conditions variable;
 	if HIBPDX=2 then HIBP=0; else if HIBPDX=1 then HIBP=1; 
 	if CHDDX=2 then CHD=0; else if CHDDX=1 then CHD=1; 
 	if STRKDX=2 then STRK=0; else if STRKDX=1 then STRK=1; 
