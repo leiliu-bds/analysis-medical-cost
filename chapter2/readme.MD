@@ -5,13 +5,12 @@ Outlines and Locations for Codes:
 
 Data structure and subset for positive cost: chapter2_data.sas
 
-Log normal distribution (residuals, cv residuals, incremental effect and partial elasticity): chapter2_lognormal.sas
+Log normal distribution: chapter2_lognormal.sas (residuals, cv residuals, incremental effect and partial elasticity)
 
-Generalized Gamma distribution (residuals, cv residuals, incremental effect and partial elasticity): chapter2_generalized-gamma.sas
+Generalized Gamma distribution: chapter2_generalized-gamma.sas (residuals, cv residuals, incremental effect and partial elasticity)
 
-Log-skew-normal distribution (residuals, cv residuals, incremental effect and partial elasticity): chapter2_logskewnormal.sas
+Log-skew-normal distribution: chapter2_logskewnormal.sas (residuals, cv residuals, incremental effect and partial elasticity)
 
-Box-Cox transformation (residuals, cv residuals): chapter2_box-cox.sas
-Box-Cox transformation (incremental effect and partial elasticity): chapter2_box-cox_rate_of_change.R
+Box-Cox transformation : chapter2_box-cox.sas (residuals, cv residuals and bootstrap), chapter2_box-cox_rate_of_change.R (incremental effect and partial elasticity)
 
-FQL (residuals, cv residuals, incremental effect and partial elasticity): chapter_fql.R
+FQL: chapter_fql.R (residuals, cv residuals, incremental effect and partial elasticity)
