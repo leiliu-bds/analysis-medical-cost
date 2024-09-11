@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter2;
 
 data &data; 
@@ -94,7 +94,9 @@ proc nlmixed  data=&data;
   		  	d4_18=0 d4_25=0 d4_35=0	
   		  	d4_45=0	d4_65=0 d4_75=0
   		  	d5_northeast=0 d5_midwest=0 d5_west=0
-  		  	d6=0 lambda=0;
+  		  	d6=0 
+       
+       			lambda=0;
 	
 	*Location;
 	mu =  b0 + b1_hibp*HIBP + b1_chd*CHD + b1_strk*STRK + 
@@ -137,7 +139,7 @@ proc nlmixed  data=&data;
 	ESTIMATE "marginal effect-chd" 			2*exp(b0+b1_chd+(exp((d0 + d1_chd)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chd)/2)/sqrt(exp((d0 + d1_chd)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-strk" 		2*exp(b0+b1_strk+(exp((d0 + d1_strk)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_strk)/2)/sqrt(exp((d0 + d1_strk)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-emph" 		2*exp(b0+b1_emph+(exp((d0 + d1_emph)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_emph)/2)/sqrt(exp((d0 + d1_emph)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-    ESTIMATE "marginal effect-chbron" 		2*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chbron)/2)/sqrt(exp((d0 + d1_chbron)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+    	ESTIMATE "marginal effect-chbron" 		2*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chbron)/2)/sqrt(exp((d0 + d1_chbron)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-chol" 		2*exp(b0+b1_chol+(exp((d0 + d1_chol)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chol)/2)/sqrt(exp((d0 + d1_chol)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-cancer" 		2*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_cancer)/2)/sqrt(exp((d0 + d1_cancer)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-diab" 		2*exp(b0+b1_diab+(exp((d0 + d1_diab)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_diab)/2)/sqrt(exp((d0 + d1_diab)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
@@ -145,16 +147,16 @@ proc nlmixed  data=&data;
 	ESTIMATE "marginal effect-arth" 		2*exp(b0+b1_arth+(exp((d0 + d1_arth)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_arth)/2)/sqrt(exp((d0 + d1_arth)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-asth" 		2*exp(b0+b1_asth+(exp((d0 + d1_asth)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_asth)/2)/sqrt(exp((d0 + d1_asth)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-male" 		2*exp(b0+b2+(exp((d0 + d2)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d2)/2)/sqrt(exp((d0 + d2)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-    ESTIMATE "marginal effect-hispanic" 	2*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_hispanic)/2)/sqrt(exp((d0 + d3_hispanic)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+    	ESTIMATE "marginal effect-hispanic" 		2*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_hispanic)/2)/sqrt(exp((d0 + d3_hispanic)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-black" 		2*exp(b0+b3_black+(exp((d0 + d3_black)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_black)/2)/sqrt(exp((d0 + d3_black)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-other" 		2*exp(b0+b3_other+(exp((d0 + d3_other)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_other)/2)/sqrt(exp((d0 + d3_other)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_18_24"	2*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_18)/2)/sqrt(exp((d0 + d4_18)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_25_34"	2*exp(b0+b4_25+(exp((d0 + d4_25)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_25)/2)/sqrt(exp((d0 + d4_25)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_35_44"	2*exp(b0+b4_35+(exp((d0 + d4_35)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_35)/2)/sqrt(exp((d0 + d4_35)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_45_54"	2*exp(b0+b4_45+(exp((d0 + d4_45)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_45)/2)/sqrt(exp((d0 + d4_45)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_65_74"	2*exp(b0+b4_65+(exp((d0 + d4_65)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_65)/2)/sqrt(exp((d0 + d4_65)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-AGE_75_85"	2*exp(b0+b4_75+(exp((d0 + d4_75)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_75)/2)/sqrt(exp((d0 + d4_75)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
-	ESTIMATE "marginal effect-NORTHEAST"	2*exp(b0+b5_northeast+(exp((d0 + d5_northeast)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_northeast)/2)/sqrt(exp((d0 + d5_northeast)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_18_24"		2*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_18)/2)/sqrt(exp((d0 + d4_18)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_25_34"		2*exp(b0+b4_25+(exp((d0 + d4_25)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_25)/2)/sqrt(exp((d0 + d4_25)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_35_44"		2*exp(b0+b4_35+(exp((d0 + d4_35)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_35)/2)/sqrt(exp((d0 + d4_35)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_45_54"		2*exp(b0+b4_45+(exp((d0 + d4_45)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_45)/2)/sqrt(exp((d0 + d4_45)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_65_74"		2*exp(b0+b4_65+(exp((d0 + d4_65)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_65)/2)/sqrt(exp((d0 + d4_65)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-AGE_75_85"		2*exp(b0+b4_75+(exp((d0 + d4_75)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_75)/2)/sqrt(exp((d0 + d4_75)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
+	ESTIMATE "marginal effect-NORTHEAST"		2*exp(b0+b5_northeast+(exp((d0 + d5_northeast)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_northeast)/2)/sqrt(exp((d0 + d5_northeast)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-MIDWEST" 		2*exp(b0+b5_midwest+(exp((d0 + d5_midwest)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_midwest)/2)/sqrt(exp((d0 + d5_midwest)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-WEST" 		2*exp(b0+b5_west+(exp((d0 + d5_west)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_west)/2)/sqrt(exp((d0 + d5_west)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
 	ESTIMATE "marginal effect-IPDIS" 		2*exp(b0+b6+(exp((d0 + d6)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d6)/2)/sqrt(exp((d0 + d6)/2)**2 + lambda**2))-2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2));
@@ -164,27 +166,27 @@ proc nlmixed  data=&data;
 	ESTIMATE 'partial elasticity-CHD' 		log(2*exp(b0+b1_chd+(exp((d0 + d1_chd)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chd)/2)/sqrt(exp((d0 + d1_chd)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-STRK' 		log(2*exp(b0+b1_strk+(exp((d0 + d1_strk)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_strk)/2)/sqrt(exp((d0 + d1_strk)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-EMPH' 		log(2*exp(b0+b1_emph+(exp((d0 + d1_emph)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_emph)/2)/sqrt(exp((d0 + d1_emph)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-    ESTIMATE 'partial elasticity-CHBRON' 	log(2*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chbron)/2)/sqrt(exp((d0 + d1_chbron)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+    	ESTIMATE 'partial elasticity-CHBRON' 		log(2*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chbron)/2)/sqrt(exp((d0 + d1_chbron)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-CHOL' 		log(2*exp(b0+b1_chol+(exp((d0 + d1_chol)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_chol)/2)/sqrt(exp((d0 + d1_chol)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-CANCER' 	log(2*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_cancer)/2)/sqrt(exp((d0 + d1_cancer)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-CANCER' 		log(2*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_cancer)/2)/sqrt(exp((d0 + d1_cancer)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-DIAB' 		log(2*exp(b0+b1_diab+(exp((d0 + d1_diab)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_diab)/2)/sqrt(exp((d0 + d1_diab)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-JTPAIN' 	log(2*exp(b0+b1_jtpain+(exp((d0 + d1_jtpain)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_jtpain)/2)/sqrt(exp((d0 + d1_jtpain)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-JTPAIN' 		log(2*exp(b0+b1_jtpain+(exp((d0 + d1_jtpain)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_jtpain)/2)/sqrt(exp((d0 + d1_jtpain)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-ARTH' 		log(2*exp(b0+b1_arth+(exp((d0 + d1_arth)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_arth)/2)/sqrt(exp((d0 + d1_arth)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-ASTH' 		log(2*exp(b0+b1_asth+(exp((d0 + d1_asth)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d1_asth)/2)/sqrt(exp((d0 + d1_asth)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-MALE' 		log(2*exp(b0+b2+(exp((d0 + d2)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d2)/2)/sqrt(exp((d0 + d2)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-    ESTIMATE 'partial elasticity-HISPANIC'	log(2*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_hispanic)/2)/sqrt(exp((d0 + d3_hispanic)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+    	ESTIMATE 'partial elasticity-HISPANIC'		log(2*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_hispanic)/2)/sqrt(exp((d0 + d3_hispanic)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-BLACK'		log(2*exp(b0+b3_black+(exp((d0 + d3_black)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_black)/2)/sqrt(exp((d0 + d3_black)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-OTHER' 	log(2*exp(b0+b3_other+(exp((d0 + d3_other)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_other)/2)/sqrt(exp((d0 + d3_other)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_18_24' log(2*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_18)/2)/sqrt(exp((d0 + d4_18)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_25_34'	log(2*exp(b0+b4_25+(exp((d0 + d4_25)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_25)/2)/sqrt(exp((d0 + d4_25)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_35_44' log(2*exp(b0+b4_35+(exp((d0 + d4_35)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_35)/2)/sqrt(exp((d0 + d4_35)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_45_54'	log(2*exp(b0+b4_45+(exp((d0 + d4_45)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_45)/2)/sqrt(exp((d0 + d4_45)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_65_74' log(2*exp(b0+b4_65+(exp((d0 + d4_65)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_65)/2)/sqrt(exp((d0 + d4_65)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-AGE_75_85' log(2*exp(b0+b4_75+(exp((d0 + d4_75)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_75)/2)/sqrt(exp((d0 + d4_75)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-NORTHEAST' log(2*exp(b0+b5_northeast+(exp((d0 + d5_northeast)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_northeast)/2)/sqrt(exp((d0 + d5_northeast)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-MIDWEST' 	log(2*exp(b0+b5_midwest+(exp((d0 + d5_midwest)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_midwest)/2)/sqrt(exp((d0 + d5_midwest)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-OTHER' 		log(2*exp(b0+b3_other+(exp((d0 + d3_other)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d3_other)/2)/sqrt(exp((d0 + d3_other)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_18_24' 	log(2*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_18)/2)/sqrt(exp((d0 + d4_18)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_25_34'		log(2*exp(b0+b4_25+(exp((d0 + d4_25)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_25)/2)/sqrt(exp((d0 + d4_25)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_35_44' 	log(2*exp(b0+b4_35+(exp((d0 + d4_35)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_35)/2)/sqrt(exp((d0 + d4_35)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_45_54'		log(2*exp(b0+b4_45+(exp((d0 + d4_45)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_45)/2)/sqrt(exp((d0 + d4_45)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_65_74' 	log(2*exp(b0+b4_65+(exp((d0 + d4_65)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_65)/2)/sqrt(exp((d0 + d4_65)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-AGE_75_85' 	log(2*exp(b0+b4_75+(exp((d0 + d4_75)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d4_75)/2)/sqrt(exp((d0 + d4_75)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-NORTHEAST' 	log(2*exp(b0+b5_northeast+(exp((d0 + d5_northeast)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_northeast)/2)/sqrt(exp((d0 + d5_northeast)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-MIDWEST' 		log(2*exp(b0+b5_midwest+(exp((d0 + d5_midwest)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_midwest)/2)/sqrt(exp((d0 + d5_midwest)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 	ESTIMATE 'partial elasticity-WEST' 		log(2*exp(b0+b5_west+(exp((d0 + d5_west)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d5_west)/2)/sqrt(exp((d0 + d5_west)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
-	ESTIMATE 'partial elasticity-IPDIS' 	log(2*exp(b0+b6+(exp((d0 + d6)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d6)/2)/sqrt(exp((d0 + d6)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
+	ESTIMATE 'partial elasticity-IPDIS' 		log(2*exp(b0+b6+(exp((d0 + d6)/2))**2/2)*CDF('NORMAL',lambda*exp((d0 + d6)/2)/sqrt(exp((d0 + d6)/2)**2 + lambda**2)))-log(2*exp(b0+(exp(d0/2))**2/2)*CDF('NORMAL',lambda*exp(d0/2)/sqrt(exp(d0/2)**2 + lambda**2)));
 run;
 
 ************************************************************;
@@ -354,7 +356,9 @@ run;
 	  		  	d4_18=0 d4_25=0 d4_35=0	
 	  		  	d4_45=0	d4_65=0 d4_75=0
 	  		  	d5_northeast=0 d5_midwest=0 d5_west=0
-	  		  	d6=0 lambda=0;
+	  		  	d6=0 
+				
+    				lambda=0;
         		
 		*Location;
 		mu =  b0 + b1_hibp*HIBP + b1_chd*CHD + b1_strk*STRK + 
