@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter2;
 
 data &data; 
@@ -72,6 +72,7 @@ run;
 
 ************************************************************;
 ************************************************************;
+
 *1. Calculate marginal effect and partial elasticity;
 title "Generalized Gamma distribution on positive-cost data";
 proc nlmixed data=&data;
@@ -451,7 +452,7 @@ run;
     	data pred_&fold.;
         	set test;
 
-		mu=&b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
+		mu = &b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
 		  	&b1_emph*EMPH + &b1_chbron*CHBRON + &b1_chol*CHOL + &b1_cancer*CANCER + 
 		  	&b1_diab*DIAB + &b1_jtpain*JTPAIN + &b1_arth*ARTH + &b1_asth*ASTH +
 		  	&b2*MALE + &b3_hispanic*RACE_HISPANIC + &b3_black*RACE_BLACK + &b3_other*RACE_OTHER +
@@ -469,7 +470,7 @@ run;
 				&d5_northeast*REGION_NORTHEAST + &d5_midwest*REGION_MIDWEST + &d5_west*REGION_WEST +
 				&d6*IPDIS)/2);
 		  		   
-		pred=exp(mu+sigma*log(&k**2)/&k+log(gamma(1/(&k**2)+sigma/&k))-log(gamma(1/(&k**2))));
+		pred = exp(mu+sigma*log(&k**2)/&k+log(gamma(1/(&k**2)+sigma/&k))-log(gamma(1/(&k**2))));
 		keep dupersid mu sigma pred TOTEXP17;
 	run;
 %MEND;
