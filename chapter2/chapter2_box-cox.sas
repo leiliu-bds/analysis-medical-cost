@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter2;
 
 data &data; 
@@ -171,7 +171,7 @@ proc univariate data=box_residual;
 	var resid abs;
 run;
 
-/* Note: the residuals may vary due to random numbers*/
+/* Note: Residuals may vary due to the generation of random numbers */
 /* Box-Cox Model results: 
    Mean residual: -322					
    Mean absolute residual: 6492		*/
@@ -483,7 +483,7 @@ proc univariate data=cv_residual;
     var resid absresid;
 run;
 
-/* Note: the residuals may vary due to random numbers*/
+/* Note: Residuals may vary due to the generation of random numbers */
 /* Box-Cox Model results: 
    Mean cross-validation residual: -310		
    Mean cross-validation absolute residual: 6495		 */
@@ -532,7 +532,7 @@ run;
    
         **************************************************;
             
-	/*Note: this step is used to check the basic statistics for bootstrap data*/
+	/* Note: this step is used to check the basic statistics for bootstrap data*/
 	/*
         *Storing Bootstrap Mean and Standard Deviation;
         proc means data=outboot mean STD noprint;
@@ -634,16 +634,17 @@ run;
 ************************************************************;
 
 *4.E. Output bootstrap;
-/*Note: The file "bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter2_box-cox_rate_of_change.R")*/
+/* Note: You can modify the "..." to specify the desired directory path for bootstrap data */
+/* Note: The file "bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter2_box-cox_rate_of_change.R")*/
 proc export data=bootstrap_parameter_part2
-	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_parameter.csv"
+	     outfile="/.../part2_bootstrap_parameter.csv"
 	     dbms=csv replace;
 run;
 
 
-/*Note: this step is used to check the basic statistics for bootstrap data*/
+/* Note: this step is used to store the basic statistics for bootstrap data*/
 /*proc export data=bootstrap_stats_part2
-	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_stats.csv"
+	     outfile="/.../part2_bootstrap_stats.csv"
 	     dbms=csv replace;
 run;*/
 
