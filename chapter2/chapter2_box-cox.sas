@@ -159,18 +159,19 @@ data box;
 		end;
 		
 		meanpred= mean(of predvalue[*]);
-		resid=totexp17-meanpred;				*mean of residual: -726.55176;
+		resid=totexp17-meanpred;				
 run;
 
 data box_residual;
 	set box;
-	abs = abs(resid);						*mean of abs: 6045.69966;
+	abs = abs(resid);						
 run;
 
 proc univariate data=box_residual;
 	var resid abs;
 run;
 
+/* Note: the residuals may vary due to random numbers*/
 /* Box-Cox Model results: 
    Mean residual: -322					
    Mean absolute residual: 6492		*/
@@ -482,6 +483,7 @@ proc univariate data=cv_residual;
     var resid absresid;
 run;
 
+/* Note: the residuals may vary due to random numbers*/
 /* Box-Cox Model results: 
    Mean cross-validation residual: -310		
    Mean cross-validation absolute residual: 6495		 */
