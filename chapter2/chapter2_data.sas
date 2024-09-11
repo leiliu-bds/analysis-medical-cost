@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter2;
 
 
@@ -74,7 +74,11 @@ run;
 
 
 *1.E. Export MEPS_CHAPTER2.csv;
- * This file can be downloaded to calculate residuals, incremental effect and partial elasticity for FQL using the R code "chapter2_fql.R";
+* This file can be downloaded to calculate residuals, incremental effect and partial elasticity for FQL using the R code "chapter2_fql.R";
+proc export data=meps_chapter2
+	     outfile="/.../meps_chapter2.csv"
+	     dbms=csv replace;
+run;
 
 ************************************************************;
 ************************************************************;
@@ -129,4 +133,8 @@ run;
 
 
 *2.E. Export CV_FOLD.csv;
- * This file can be downloaded to calculate Cross-Validation residuals for FQL using the R code "chapter2_fql.R";
+* NOTE: This file can be downloaded to calculate Cross-Validation residuals for FQL using the R code "chapter2_fql.R";
+proc export data=cv_fold
+	     outfile="/.../cv_fold.csv"
+	     dbms=csv replace;
+run;
