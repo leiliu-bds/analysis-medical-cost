@@ -634,14 +634,17 @@ run;
 ************************************************************;
 
 *4.E. Output bootstrap;
-proc export data=bootstrap_stats_part2
-	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_stats.csv"
-	     dbms=csv replace;
-run;
-
+/*Note: The file "bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter2_box-cox_rate_of_change.R")*/
 proc export data=bootstrap_parameter_part2
 	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_parameter.csv"
 	     dbms=csv replace;
 run;
- * The file "part2_bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter2_box-cox_rate_of_change.R");
+
+
+/*Note: this step is used to check the basic statistics for bootstrap data*/
+/*proc export data=bootstrap_stats_part2
+	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_stats.csv"
+	     dbms=csv replace;
+run;*/
+
 
