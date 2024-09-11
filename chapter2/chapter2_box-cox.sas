@@ -531,7 +531,9 @@ run;
 	run;
    
         **************************************************;
-        
+            
+	/*Note: this step is used to check the basic statistics for bootstrap data*/
+	/*
         *Storing Bootstrap Mean and Standard Deviation;
         proc means data=outboot mean STD noprint;
             var TOTEXP17;
@@ -539,7 +541,6 @@ run;
             		mean=bootstrap_mean 
 			std=bootstrap_std;
         run;
-        
 
         *Appending the statistic to the bootstrap_stats dataset;
         data bootstrap_stats_temp_&i ;
@@ -547,13 +548,13 @@ run;
             iteration = &i;
             output;
         run;
-        
 
         * Appending the bootstrap_stats_temp dataset to bootstrap_stats;
         proc append base=bootstrap_stats_part2 
         	     data=bootstrap_stats_temp_&i force;
         run;
-        
+        */
+	
         **************************************************;
         
 	*Fitting the Box-Cox Distribution Model;
@@ -610,7 +611,7 @@ run;
 
        **************************************************;
 
-	*Storing Parameter Estimates
+	*Storing Parameter Estimates;
 	proc transpose data=est_box(keep=parameter estimate) 
 			out=est_box_&i(drop=_name_);
 			id parameter;
@@ -634,12 +635,12 @@ run;
 
 *4.E. Output bootstrap;
 proc export data=bootstrap_stats_part2
-	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202404_MEPS/04_Code/03_Marginal Effect_R/03_incremental_Basu/B. Modified_Lexy/20240415_bootstrap/part2_bootstrap_stats.csv"
+	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_stats.csv"
 	     dbms=csv replace;
 run;
 
 proc export data=bootstrap_parameter_part2
-	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202404_MEPS/04_Code/03_Marginal Effect_R/03_incremental_Basu/B. Modified_Lexy/20240415_bootstrap/part2_bootstrap_parameter.csv"
+	     outfile="/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_parameter.csv"
 	     dbms=csv replace;
 run;
  * The file "part2_bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter2_box-cox_rate_of_change.R");
