@@ -10,8 +10,8 @@ library(fql)
 #1. Residuals for FQL
 
 #1.A. Data input
- #MEPS_CHAPTER2.csv file can be created and downloaded by using the SAS code "chapter2_data.sas"
-  meps_chapter2 = read.csv("/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/MEPS_CHAPTER2.csv")
+ # NOTE: meps_chapter2.csv file can be created and downloaded by using the SAS code "chapter2_data.sas"
+  meps_chapter2 = read.csv("/.../meps_chapter2.csv")
   
   variable=c("HIBP","CHD","STRK","EMPH","CHBRON","CHOL",
              "CANCER","DIAB","JTPAIN","ARTH","ASTH",
@@ -47,8 +47,8 @@ library(fql)
 #2. Cross-Validation Residuals for FQL
 
 #2.A. Data input
- #CV_FOLD.csv file can be created and downloaded by using the SAS code "chapter2_data.sas"
-  cv_fold = read.csv("/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/CV_FOLD.csv")
+ # NOTE: cv_fold.csv file can be created and downloaded by using the SAS code "chapter2_data.sas"
+  cv_fold = read.csv("/.../cv_fold.csv")
 
 
 #2.B. Setting up Cross-Validation and Residuals functions  
@@ -194,8 +194,8 @@ library(fql)
   
   mean = effect_bi_fql_part2[1,]
   se = effect_bi_fql_part2[2,]
-  
   p_value_fql = p_value(mean, se)
+
   as.numeric((p_value_fql))
   #[1] 2.321447e-03 2.170764e-05 2.456697e-05 8.471359e-01 7.426805e-02
   #[6] 1.600324e-02 1.835983e-09 0.000000e+00 6.757617e-11 8.229101e-07
@@ -235,8 +235,8 @@ library(fql)
   
   mean = effect_bi_fql_part2_pe[1,]
   se = effect_bi_fql_part2_pe[2,]
-
   p_value_fql_pe = p_value(mean, se)
+
   as.numeric((p_value_fql_pe))
   #[1] 1.208603e-03 1.322359e-06 5.733031e-07 8.461525e-01 5.434824e-02
   #[6] 1.152658e-02 4.174439e-14 0.000000e+00 6.372680e-14 3.317271e-08
