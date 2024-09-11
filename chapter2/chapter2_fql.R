@@ -194,9 +194,9 @@ library(fql)
   
   mean = effect_bi_fql_part2[1,]
   se = effect_bi_fql_part2[2,]
-  p_value_fql = p_value(mean, se)
+  p_value_fql_part2 = p_value(mean, se)
 
-  as.numeric((p_value_fql))
+  as.numeric((p_value_fql_part2))
   #[1] 2.321447e-03 2.170764e-05 2.456697e-05 8.471359e-01 7.426805e-02
   #[6] 1.600324e-02 1.835983e-09 0.000000e+00 6.757617e-11 8.229101e-07
   #[11] 2.989490e-06 3.013708e-05 2.948466e-05 4.355458e-04 5.523431e-05
@@ -235,9 +235,9 @@ library(fql)
   
   mean = effect_bi_fql_part2_pe[1,]
   se = effect_bi_fql_part2_pe[2,]
-  p_value_fql_pe = p_value(mean, se)
+  p_value_fql_part2_pe = p_value(mean, se)
 
-  as.numeric((p_value_fql_pe))
+  as.numeric((p_value_fql_part2_pe))
   #[1] 1.208603e-03 1.322359e-06 5.733031e-07 8.461525e-01 5.434824e-02
   #[6] 1.152658e-02 4.174439e-14 0.000000e+00 6.372680e-14 3.317271e-08
   #[11] 1.567539e-07 9.264410e-05 1.609184e-04 1.132650e-03 2.641373e-04
