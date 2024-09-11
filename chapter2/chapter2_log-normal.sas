@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter2;
 
 data &data; 
@@ -340,14 +340,14 @@ run;
 	  	parms 	b0=6.8363 b1_hibp=0.1513 b1_chd=0.2744 b1_strk=0.1867
 	  			b1_emph=0.1004 b1_chbron=0.1105 b1_chol=0.2377 b1_cancer=0.3390
 	  			b1_diab=0.5711 b1_jtpain=0.2797 b1_arth=0.3185 b1_asth=0.3551
-	  		  	b2=-0.2548	  b3_hispanic=0 b3_black=0 b3_other=0
+	  		  	b2=-0.2548 b3_hispanic=0 b3_black=0 b3_other=0
 	  		  	b4_18=-0.5406 b4_25=-0.3740 b4_35=-0.2605
-	  		  	b4_45=-0.1793	b4_65=0.1090 b4_75=0.1696
-	  		  	b5_northeast=0.2711 b5_midwest=0.1101	 b5_west=0.1129
+	  		  	b4_45=-0.1793 b4_65=0.1090 b4_75=0.1696
+	  		  	b5_northeast=0.2711 b5_midwest=0.1101 b5_west=0.1129
 	  		  	b6=2.1109
 	  		  	
 	  		  	d0=0 d1_hibp=0 d1_chd=0 d1_strk=0
-	  			d1_emph=0	d1_chbron=0 d1_chol=0 d1_cancer=0
+	  			d1_emph=0 d1_chbron=0 d1_chol=0 d1_cancer=0
 	  			d1_diab=0 d1_jtpain=0 d1_arth=0 d1_asth=0
 	  		  	d2=0  d3_hispanic=1 d3_black=0 d3_other=0
 	  		  	d4_18=0 d4_25=0 d4_35=0	
@@ -444,7 +444,7 @@ run;
     	data pred_&fold.;
         	set test;
 
-		mu=&b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
+		mu = &b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
 		  	&b1_emph*EMPH + &b1_chbron*CHBRON + &b1_chol*CHOL + &b1_cancer*CANCER + 
 		  	&b1_diab*DIAB + &b1_jtpain*JTPAIN + &b1_arth*ARTH + &b1_asth*ASTH +
 		  	&b2*MALE + &b3_hispanic*RACE_HISPANIC + &b3_black*RACE_BLACK + &b3_other*RACE_OTHER +
