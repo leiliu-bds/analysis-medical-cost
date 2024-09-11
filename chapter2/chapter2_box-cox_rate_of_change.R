@@ -8,7 +8,7 @@
 
 #1.A. Input data
   # This file can be created and downloaded by using the SAS code "chapter2_box-cox.sas"
-  box_parameter_part2=read.csv("/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/05_GitHub/chapter2/part2_bootstrap_parameter.csv")
+  box_parameter_part2=read.csv("/.../part2_bootstrap_parameter.csv")
   
   beta = box_parameter_part2[,colnames(box_parameter_part2)[startsWith(colnames(box_parameter_part2),"b")]]
   beta.0=beta$b0
@@ -63,9 +63,9 @@
   for (i in 1:(2*n)) {
     effect_bi_box_part2_std[i]=sd(effect_bi_box_part2_boot[,i])
   }
-  effect_bi_box_part2_std
-  
+
   #SD for incremental effect
+  effect_bi_box_part2_std[1,n]
   #[1] 112.65291248 191.45706531 267.45315380 259.17040346 291.35928446
   #[6]  86.18584637 194.29036595 190.88237317 118.17438967 121.47998646
   #[11] 132.62547122  79.65294323  90.53772977  84.75777264 112.61136297
@@ -73,6 +73,7 @@
   #[21] 153.84163960 136.04847371  99.71959827 104.22394159 652.48429489
 
   #SD for partial elasticity
+  effect_bi_box_part2_std[n+1,2*n]
   #[26]   0.03259642   0.04930679   0.06475304   0.08037862   0.08339052
   #[31]   0.02596786   0.04161368   0.03632055   0.02781439   0.03223030
   #[36]   0.03248107   0.02828113   0.03852207   0.03141693   0.04472476
@@ -102,9 +103,7 @@
 
 
 #2.B. Set up integral function
-  int_box = function(v,beta,delta,gamma) 
-    
-  {
+  int_box = function(v,beta,delta,gamma){
     density = 1/(exp(delta/2)*sqrt(2*pi))*exp(-(v-beta)^2/2/exp(delta/2)^2)
     eqn = (gamma*v+1)^(1/gamma)
     logE = density*eqn
@@ -113,8 +112,7 @@
 
 
 #2.C. Calculate incremental effect
-  effect_bi_box_part2=rep(0,n)
-  
+  effect_bi_box_part2=rep(0,n) 
   for (i in 1:n) {
     result_1 = integrate(int_box,-10,Inf,
                          beta = beta.0 + beta.1[i],
@@ -129,8 +127,6 @@
     effect_bi_box_part2[i]=(as.numeric(result_1$value))-(as.numeric(result_0$value))
   }
 
-  
-#2.D. Examine incremental effect
   effect_bi_box_part2
   #[1]   561.3769   841.1273  1197.2540   249.5185   508.6773
   #[6]   411.0970  1460.2455  2258.8528  1042.2716   909.0191
@@ -138,11 +134,22 @@
   #[16] -1283.3282  -899.1724  -552.5706  -264.6594  -144.5108
   #[21]   169.1132  1063.0832   234.6708   261.2932 15537.9552
 
+#2.D. Calculate p-value for incremental effect
+  p_value = function(mean, se) {
+    z_stat = mean / se
+    p_value = 2 * (1 - pnorm(abs(z_stat)))
+    return(p_value)
+  }
+  
+  mean = effect_bi_box_part2
+  se = effect_bi_box_part2_std[1:n]
+  p_value(mean, se)
 
 ##############################################################################     
 
-#3. Calculate partial Elasticity for Box-Cox distribution
+#3. Calculate partial elasticity for Box-Cox distribution
 
+#3.A. Calculate partial elasticity
   effect_bi_box_part2_pe=rep(0,n)
   
   for (i in 1:n)  {
@@ -167,3 +174,27 @@
   #[16] -0.55846381 -0.35641772 -0.20364620 -0.09238723 -0.04938527
   #[21]  0.05485657  0.30341341  0.07533805  0.08353713  1.82147581
 
+#3.B. Calculate p-value for partial elasticity
+  p_value = function(mean, se) {
+    z_stat = mean / se
+    p_value = 2 * (1 - pnorm(abs(z_stat)))
+    return(p_value)
+  }
+  
+  mean = effect_bi_box_part2_pe
+  se = effect_bi_box_part2_std[n+1:2*n]
+  p_value(mean, se)
+
+##############################################################################     
+
+#4. Summarize incremental effect and partial elasticity for Box-Cox distribution
+
+#Incremental effect
+  effect_bi_box_part2
+  effect_bi_box_part2_std[1:n]                                       #SE
+  p_value(effect_bi_box_part2, effect_bi_box_part2_std[1:n])         #P-value
+
+#Partial elasticity
+  effect_bi_box_part2_pe
+  effect_bi_box_part2_std[n+1:2*n]                                   #SE
+  p_value(effect_bi_box_part2_pe, effect_bi_box_part2_std[n+1:2*n])  #P-calue
