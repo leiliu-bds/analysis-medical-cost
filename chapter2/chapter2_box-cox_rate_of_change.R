@@ -143,7 +143,7 @@
   
   mean = effect_bi_box_part2
   se =   effect_bi_box_part2_std[1:25]
-  p_value(mean, se)
+  p_value_box_part2 = p_value(mean, se)
 
 ##############################################################################     
 
@@ -183,7 +183,7 @@
   
   mean = effect_bi_box_part2_pe
   se = effect_bi_box_part2_std[26:50]
-  p_value(mean, se)
+  p_value_box_part2_pe = p_value(mean, se)
 
 ##############################################################################     
 
@@ -191,10 +191,10 @@
 
 #Incremental effect
   effect_bi_box_part2
-  effect_bi_box_part2_std[1:25]                                    #SE
-  p_value(effect_bi_box_part2, effect_bi_box_part2_std[1:25])      #P-value
+  effect_bi_box_part2_std[1:25]                                   
+  p_value_box_part2    
 
 #Partial elasticity
   effect_bi_box_part2_pe
-  effect_bi_box_part2_std[26:50]                                   #SE
-  p_value(effect_bi_box_part2_pe, effect_bi_box_part2_std[26:50])  #P-calue
+  effect_bi_box_part2_std[26:50]                                  
+  p_value_box_part2_pe            
