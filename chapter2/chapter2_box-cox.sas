@@ -498,6 +498,8 @@ run;
 *4. Bootstrap dataset for calculating the standard error for incremental effect and partial elasticity;
 *4.A. Setting up Bootstrap Parameters;
 %let n_bootstrap = 100;
+
+/* Note: The results from the bootstrap procedure may vary depending on the seed setting used for random sampling. */
 *%let seed = 123;
 
 ************************************************************;
