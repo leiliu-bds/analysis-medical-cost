@@ -205,7 +205,7 @@ data est;
 	set box_est;
 	if parameter="gamma";
 	call symputx('gamma', estimate);
-run;*0.07403;
+run;
 
 data output;
 	merge mu (rename=(pred=mu_pred))
