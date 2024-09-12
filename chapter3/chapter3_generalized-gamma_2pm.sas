@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter3;
 
 data &data; 
