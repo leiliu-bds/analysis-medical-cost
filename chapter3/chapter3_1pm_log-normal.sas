@@ -1,4 +1,4 @@
-libname meps "/home/u61757012/MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter3_1pm;
 
 data &data; 
@@ -40,7 +40,7 @@ data &data;
 	if RACETHX=4 OR RACETHX=5 then RACE_OTHER=1; else RACE_OTHER=0; 
 
 	*Categorize region variable (reference group: REGION_SOUTH);
-    if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
+    	if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
 	if REGION17=2 then REGION_MIDWEST=1; else REGION_MIDWEST=0;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
@@ -209,74 +209,23 @@ proc nlmixed data=&data;
 		  		   d6*IPDIS)/2);	
 		  		   
 	z = (LOGTOTEXP - mu) / sigma;
-    pdf_normal = pdf('normal', z);
-    loglik=log((pdf_normal/(sigma*TOTEXP)));
+    	pdf_normal = pdf('normal', z);
+    	loglik=log((pdf_normal/(sigma*TOTEXP)));
     
-    *Expected Value;
-    E_y=exp(mu + sigma**2/2);
+    	*Expected Value;
+    	E_y=exp(mu + sigma**2/2);
 	
 	*Fit the model above;
 	model TOTEXP~general(loglik);
 
 	*Output expected value;
 	predict E_y out=lognormal;
-	
-	*Marginal Effects;
-	estimate "marginal effect-HIBP" 	exp(b0+b1_hibp+exp((d0+d1_hibp)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHD" 		exp(b0+b1_chd+exp((d0+d1_chd)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-STRK" 	exp(b0+b1_strk+exp((d0+d1_strk)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-EMPH" 	exp(b0+b1_emph+exp((d0+d1_emph)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHBRON" 	exp(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHOL" 	exp(b0+b1_chol+exp((d0+d1_chol)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CANCER" 	exp(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-DIAB" 	exp(b0+b1_diab+exp((d0+d1_diab)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-JTPAIN" 	exp(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-ARTH" 	exp(b0+b1_arth+exp((d0+d1_arth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-ASTH" 	exp(b0+b1_asth+exp((d0+d1_asth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-MALE" 	exp(b0+b2+exp((d0+d2)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-HISPANIC" 	exp(b0+b3_hispanic+exp((d0+d3_hispanic)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-BLACK" 	exp(b0+b3_black+exp((d0+d3_black)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-OTHER" 	exp(b0+b3_other+exp((d0+d3_other)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_18_24" 	exp(b0+b4_18+exp((d0+d4_18)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_25_34" 	exp(b0+b4_25+exp((d0+d4_25)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_35_44" 	exp(b0+b4_35+exp((d0+d4_35)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_45_54" 	exp(b0+b4_45+exp((d0+d4_45)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_65_74" 	exp(b0+b4_65+exp((d0+d4_65)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_75_85" 	exp(b0+b4_75+exp((d0+d4_75)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-NORTHEAST" 	exp(b0+b5_northeast+exp((d0+d5_northeast)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-MIDWEST" 	exp(b0+b5_midwest+exp((d0+d5_midwest)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-WEST" 	exp(b0+b5_west+exp((d0+d5_west)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-IPDIS" 	exp(b0+b6+exp((d0+d6)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	
-	*Partial Elasticity;
-	estimate 'partial elasticity-HIBP' 	(b0+b1_hibp+exp((d0+d1_hibp)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CHD' 	(b0+b1_chd+exp((d0+d1_chd)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-STRK' 	(b0+b1_strk+exp((d0+d1_strk)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-EMPH' 	(b0+b1_emph+exp((d0+d1_emph)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CHBRON'	(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CHOL' 		(b0+b1_chol+exp((d0+d1_chol)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CANCER'	(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-DIAB' 		(b0+b1_diab+exp((d0+d1_diab)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-JTPAIN'	(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-ARTH' 		(b0+b1_arth+exp((d0+d1_arth)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-ASTH' 		(b0+b1_asth+exp((d0+d1_asth)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-MALE' 		(b0+b2+exp((d0+d2)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-HISPANIC' 	(b0+b3_hispanic+exp((d0+d3_hispanic)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-BLACK' 	(b0+b3_black+exp((d0+d3_black)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-OTHER' 	(b0+b3_other+exp((d0+d3_other)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_18_24' (b0+b4_18+exp((d0+d4_18)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_25_34' (b0+b4_25+exp((d0+d4_25)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_35_44' (b0+b4_35+exp((d0+d4_35)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_45_54' (b0+b4_45+exp((d0+d4_45)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_65_74' (b0+b4_65+exp((d0+d4_65)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-AGE_75_85' (b0+b4_75+exp((d0+d4_75)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-NORTHEAST' (b0+b5_northeast+exp((d0+d5_northeast)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-MIDWEST' 	(b0+b5_midwest+exp((d0+d5_midwest)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-WEST' 		(b0+b5_west+exp((d0+d5_west)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-IPDIS' 	(b0+b6+exp((d0+d6)/2)**2/2)-(b0+exp(d0/2)**2/2);
-run;
 run;
 
+************************************************************;
+************************************************************;
+
+*2. Calculate residuals;
 data lognormal_residual;
 	set lognormal;
 	resid = TOTEXP17-pred;						
