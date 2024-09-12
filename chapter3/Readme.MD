@@ -10,6 +10,8 @@
   - Log normal distribution
     - Files: 
       - [chapter3_2pm_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_2pm_log-normal.sas): Implements log-normal distribution modeling. The script includes the calculation of residuals, cross-validated (CV) residuals, incremental effect, and partial elasticity.
+      - [chapter3_1pm_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_1pm_log-normal.sas): Implements log-normal distribution modeling in a 1-Part Model taking log(cost+1) as outcome. The script includes the calculation of residuals.
+      - [chapter3_4m_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_4pm_log-normal.sas): Implements log-normal distribution modeling in a 4-Part Model. The script includes the calculation of residuals.
 
   - Generalized Gamma distribution 
     - File: [chapter3_2pm_generalized-gamma.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_2pm_generalized-gamma.sas)
