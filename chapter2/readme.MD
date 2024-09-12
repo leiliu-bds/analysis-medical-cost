@@ -21,7 +21,7 @@
 
   - Box-Cox transformation
     - Files: 
-      - chapter2_box-cox.sas (https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_box-cox.sas): Handles model fitting, residuals, CV residuals, and bootstrap resampling for the Box-Cox transformation. 
+      - [chapter2_box-cox.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_box-cox.sas): Handles model fitting, residuals, CV residuals, and bootstrap resampling for the Box-Cox transformation. 
       - chapter2_box-cox_rate_of_change.R: Implements the calculation of incremental effect and partial elasticity using R for the Box-Cox transformation model.
 
   - FQL (Flexible Quasi-Likelihood)
