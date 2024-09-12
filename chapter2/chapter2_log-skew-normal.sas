@@ -448,7 +448,7 @@ run;
 	%parameter(est_all,d5_midwest);
 	%parameter(est_all,d5_west);
 	%parameter(est_all,d6);
-	%parameter(est_all,ambda);
+	%parameter(est_all,lambda);
 	
     	* Make predictions using the fitted model;
     	data pred_&fold.;
