@@ -8,7 +8,7 @@
 
 - Modeling with different distributions:
   - Log normal distribution
-    - File: [chapter2_lognormal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_lognormal.sas) 
+    - File: [chapter2_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_log-normal.sas) 
     - Description: Implements log-normal distribution modeling. The script includes the calculation of residuals, cross-validated (CV) residuals, incremental effect, and partial elasticity.
 
   - Generalized Gamma distribution 
@@ -16,7 +16,7 @@
     - Description: This script fits a generalized gamma distribution model. It calculates residuals, cross-validated residuals, incremental effect, and partial elasticity for the model.
 
   - Log-skew-normal distribution 
-    - File: [chapter2_logskewnormal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_logskewnormal.sas)
+    - File: [chapter2_log-skew-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_log-skew-normal.sas)
     - Description: Implements log-skew-normal distribution modeling. The script includes residuals, cross-validated residuals, incremental effect, and partial elasticity calculations.
 
   - Box-Cox transformation
