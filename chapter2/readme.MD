@@ -3,29 +3,29 @@
 ## Outlines and Locations for Codes:
 - Data Preparation:
   - Data structure for subset and cross-validation for positive cost 
-    - File: chapter2_data.sas
+    - File: [chapter2_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_data.sas)
     - Description: This script subsets the dataset to include only observations with positive total cost (TOTEXP17 > 0). It also prepares the data for 5-fold cross-validation, assigning each observation to one of the 5 folds.
 
 - Modeling with different distributions:
   - Log normal distribution
-    - File: chapter2_lognormal.sas 
+    - File: [chapter2_lognormal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_lognormal.sas) 
     - Description: Implements log-normal distribution modeling. The script includes the calculation of residuals, cross-validated (CV) residuals, incremental effect, and partial elasticity.
 
   - Generalized Gamma distribution 
-    - File: chapter2_generalized-gamma.sas 
+    - File: [chapter2_generalized-gamma.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_generalized-gamma.sas)
     - Description: This script fits a generalized gamma distribution model. It calculates residuals, cross-validated residuals, incremental effect, and partial elasticity for the model.
 
   - Log-skew-normal distribution 
-    - File: chapter2_logskewnormal.sas
+    - File: [chapter2_logskewnormal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_logskewnormal.sas)
     - Description: Implements log-skew-normal distribution modeling. The script includes residuals, cross-validated residuals, incremental effect, and partial elasticity calculations.
 
   - Box-Cox transformation
     - Files: 
       - [chapter2_box-cox.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_box-cox.sas): Handles model fitting, residuals, CV residuals, and bootstrap resampling for the Box-Cox transformation. 
-      - chapter2_box-cox_rate_of_change.R: Implements the calculation of incremental effect and partial elasticity using R for the Box-Cox transformation model.
+      - [chapter2_box-cox_rate_of_change.R](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_box-cox_rate_of_change.R): Implements the calculation of incremental effect and partial elasticity using R for the Box-Cox transformation model.
 
   - FQL (Flexible Quasi-Likelihood)
-    - File: chapter_fql.R 
+    - File: [chapter_fql.R](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter2/chapter2_fql.R) 
     - Discription: Implements the FQL model and includes calculation of residuals, cross-validated residuals, incremental effect, and partial elasticity.
 
 ## Additional Notes
