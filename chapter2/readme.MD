@@ -34,3 +34,4 @@
   - Use SAS for residuals, CV residuals, and bootstrap.
   - Use R for calculating the incremental effect and partial elasticity.
 - For the FQL model, the complete code is available in R.
+- Note: For the R scripts, users will need to create and export the "meps_chapter2.csv" and "cv_fold.csv" files by first running the "chapter2_data.sas" script to prepare the data.
