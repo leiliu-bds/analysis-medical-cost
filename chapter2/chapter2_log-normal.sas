@@ -146,14 +146,14 @@ proc nlmixed data=&data;
   	parms 	b0=6.8363 b1_hibp=0.1513 b1_chd=0.2744 b1_strk=0.1867
   			b1_emph=0.1004 b1_chbron=0.1105 b1_chol=0.2377 b1_cancer=0.3390
   			b1_diab=0.5711 b1_jtpain=0.2797 b1_arth=0.3185 b1_asth=0.3551
-  		  	b2=-0.2548	  b3_hispanic=0 b3_black=0 b3_other=0
+  		  	b2=-0.2548 b3_hispanic=0 b3_black=0 b3_other=0
   		  	b4_18=-0.5406 b4_25=-0.3740 b4_35=-0.2605
-  		  	b4_45=-0.1793	b4_65=0.1090 b4_75=0.1696
-  		  	b5_northeast=0.2711 b5_midwest=0.1101	 b5_west=0.1129
+  		  	b4_45=-0.1793 b4_65=0.1090 b4_75=0.1696
+  		  	b5_northeast=0.2711 b5_midwest=0.1101 b5_west=0.1129
   		  	b6=2.1109
   		  	
   		  	d0=0 d1_hibp=0 d1_chd=0 d1_strk=0
-  			d1_emph=0	d1_chbron=0 d1_chol=0 d1_cancer=0
+  			d1_emph=0 d1_chbron=0 d1_chol=0 d1_cancer=0
   			d1_diab=0 d1_jtpain=0 d1_arth=0 d1_asth=0
   		  	d2=0  d3_hispanic=1 d3_black=0 d3_other=0
   		  	d4_18=0 d4_25=0 d4_35=0	
@@ -199,42 +199,42 @@ proc nlmixed data=&data;
 	predict E_y out=lognormal;
 	
 	*Marginal Effects;
-	estimate "marginal effect-HIBP" exp(b0+b1_hibp+exp((d0+d1_hibp)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHD" exp(b0+b1_chd+exp((d0+d1_chd)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-STRK" exp(b0+b1_strk+exp((d0+d1_strk)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-EMPH" exp(b0+b1_emph+exp((d0+d1_emph)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHBRON" exp(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CHOL" exp(b0+b1_chol+exp((d0+d1_chol)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-CANCER" exp(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-DIAB" exp(b0+b1_diab+exp((d0+d1_diab)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-JTPAIN" exp(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-ARTH" exp(b0+b1_arth+exp((d0+d1_arth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-ASTH" exp(b0+b1_asth+exp((d0+d1_asth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-MALE" exp(b0+b2+exp((d0+d2)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-HISPANIC" exp(b0+b3_hispanic+exp((d0+d3_hispanic)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-BLACK" exp(b0+b3_black+exp((d0+d3_black)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-OTHER" exp(b0+b3_other+exp((d0+d3_other)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_18_24" exp(b0+b4_18+exp((d0+d4_18)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_25_34" exp(b0+b4_25+exp((d0+d4_25)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_35_44" exp(b0+b4_35+exp((d0+d4_35)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_45_54" exp(b0+b4_45+exp((d0+d4_45)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_65_74" exp(b0+b4_65+exp((d0+d4_65)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-AGE_75_85" exp(b0+b4_75+exp((d0+d4_75)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-NORTHEAST" exp(b0+b5_northeast+exp((d0+d5_northeast)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-MIDWEST" exp(b0+b5_midwest+exp((d0+d5_midwest)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-WEST" exp(b0+b5_west+exp((d0+d5_west)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
-	estimate "marginal effect-IPDIS" exp(b0+b6+exp((d0+d6)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-HIBP" 	exp(b0+b1_hibp+exp((d0+d1_hibp)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-CHD" 		exp(b0+b1_chd+exp((d0+d1_chd)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-STRK" 	exp(b0+b1_strk+exp((d0+d1_strk)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-EMPH" 	exp(b0+b1_emph+exp((d0+d1_emph)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-CHBRON" 	exp(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-CHOL" 	exp(b0+b1_chol+exp((d0+d1_chol)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-CANCER" 	exp(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-DIAB" 	exp(b0+b1_diab+exp((d0+d1_diab)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-JTPAIN" 	exp(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-ARTH" 	exp(b0+b1_arth+exp((d0+d1_arth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-ASTH" 	exp(b0+b1_asth+exp((d0+d1_asth)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-MALE" 	exp(b0+b2+exp((d0+d2)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-HISPANIC" 	exp(b0+b3_hispanic+exp((d0+d3_hispanic)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-BLACK" 	exp(b0+b3_black+exp((d0+d3_black)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-OTHER" 	exp(b0+b3_other+exp((d0+d3_other)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_18_24" 	exp(b0+b4_18+exp((d0+d4_18)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_25_34" 	exp(b0+b4_25+exp((d0+d4_25)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_35_44" 	exp(b0+b4_35+exp((d0+d4_35)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_45_54" 	exp(b0+b4_45+exp((d0+d4_45)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_65_74" 	exp(b0+b4_65+exp((d0+d4_65)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-AGE_75_85" 	exp(b0+b4_75+exp((d0+d4_75)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-NORTHEAST" 	exp(b0+b5_northeast+exp((d0+d5_northeast)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-MIDWEST" 	exp(b0+b5_midwest+exp((d0+d5_midwest)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-WEST" 	exp(b0+b5_west+exp((d0+d5_west)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
+	estimate "marginal effect-IPDIS" 	exp(b0+b6+exp((d0+d6)/2)**2/2)-exp(b0+exp(d0/2)**2/2);
 	
 	*Partial Elasticity;
 	estimate 'partial elasticity-HIBP' 	(b0+b1_hibp+exp((d0+d1_hibp)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-CHD' 	(b0+b1_chd+exp((d0+d1_chd)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-STRK' 	(b0+b1_strk+exp((d0+d1_strk)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-EMPH' 	(b0+b1_emph+exp((d0+d1_emph)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CHBRON'(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-(b0+exp(d0/2)**2/2);
+	estimate 'partial elasticity-CHBRON'	(b0+b1_chbron+exp((d0+d1_chbron)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-CHOL' 	(b0+b1_chol+exp((d0+d1_chol)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-CANCER'(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-(b0+exp(d0/2)**2/2);
+	estimate 'partial elasticity-CANCER'	(b0+b1_cancer+exp((d0+d1_cancer)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-DIAB' 	(b0+b1_diab+exp((d0+d1_diab)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-JTPAIN'(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-(b0+exp(d0/2)**2/2);
+	estimate 'partial elasticity-JTPAIN'	(b0+b1_jtpain+exp((d0+d1_jtpain)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-ARTH' 	(b0+b1_arth+exp((d0+d1_arth)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-ASTH' 	(b0+b1_asth+exp((d0+d1_asth)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-MALE' 	(b0+b2+exp((d0+d2)/2)**2/2)-(b0+exp(d0/2)**2/2);
@@ -249,7 +249,7 @@ proc nlmixed data=&data;
 	estimate 'partial elasticity-AGE_75_85' (b0+b4_75+exp((d0+d4_75)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-NORTHEAST' (b0+b5_northeast+exp((d0+d5_northeast)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-MIDWEST' 	(b0+b5_midwest+exp((d0+d5_midwest)/2)**2/2)-(b0+exp(d0/2)**2/2);
-	estimate 'partial elasticity-WEST' 		(b0+b5_west+exp((d0+d5_west)/2)**2/2)-(b0+exp(d0/2)**2/2);
+	estimate 'partial elasticity-WEST' 	(b0+b5_west+exp((d0+d5_west)/2)**2/2)-(b0+exp(d0/2)**2/2);
 	estimate 'partial elasticity-IPDIS' 	(b0+b6+exp((d0+d6)/2)**2/2)-(b0+exp(d0/2)**2/2);
 run;
 
