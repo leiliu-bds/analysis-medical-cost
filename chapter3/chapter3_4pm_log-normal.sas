@@ -562,12 +562,12 @@ proc nlmixed data=&data;
 		  		   d4_45*AGE_45_54 + d4_65*AGE_65_74 + d4_75*AGE_75_85 +
 		  		   d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST)/2);
   	  	
-	z = (LOGTOTEXP17 - mu) / sigma;
-    pdf_normal = pdf('normal', z);
-    loglik=log((pdf_normal/(sigma*TOTEXP17)));
-    *E_y=exp(mu + sigma**2/2);
+	z = (LOG(TOTEXP17) - mu) / sigma;
+    	pdf_normal = pdf('normal', z);
+    	loglik=log((pdf_normal/(sigma*TOTEXP17)));
+    	*E_y=exp(mu + sigma**2/2);
     	
-    *Fit the model above;
+    	*Fit the model above;
 	model TOTEXP17~general(loglik); 
 	
 	*Output parameters;
@@ -615,17 +615,15 @@ proc univariate data=part4;
 	var resid abs;
 	where U=1 and V=1;
 run;
-*mean resid: -1384.6473	;
-*mean abs: 22150.1286;
 
 /* Log-Normal Model (part IV from a 4-Part Model): 
-   Mean residual: 
-   Mean absolute residual:  */
+   Mean residual: -1384.6473
+   Mean absolute residual: 22150.1286 */
 	
-**************************************************************************************************************;
+************************************************************;
+************************************************************;
 
 *5. Merge predictions from each part;
-
 *5.A. Sort and merge dataset;
 proc sort data=part1;by dupersid;run;
 proc sort data=part2;by dupersid;run;
@@ -645,16 +643,17 @@ data fourpart;
 	resid = TOTEXP17 - pred;
 	abs = abs(resid);
 run;
-	
+
+************************************************************;
+
 *5.B. Examine residuals;	
 proc univariate	data=fourpart;
-	var resid abs TOTEXP17 pred;
+	var resid abs;
 run;
-*mean resid: -466.21773;
-*mean abs: 6577.02643;
+
 /* Log-Normal Model (4-Part Model) results: 
-   Mean residual: -850	
-   Mean absolute residual: 5910*/
+   Mean residual: -466.21773
+   Mean absolute residual: 6577.02643	*/
 
 
 
