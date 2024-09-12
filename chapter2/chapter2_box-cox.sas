@@ -415,7 +415,7 @@ run;
 	%parameter(est_all,d5_midwest);
 	%parameter(est_all,d5_west);
 	%parameter(est_all,d6);
-	%parameter(name=gamma);
+	%parameter(est_all,gamma);
 	
     	* Make predictions using the fitted model;
    	 data test_&fold.;
@@ -439,8 +439,8 @@ run;
 				&d5_northeast*REGION_NORTHEAST + &d5_midwest*REGION_MIDWEST + &d5_west*REGION_WEST +
 				&d6*IPDIS)/2);
 
-		mean=&gamma * mu +1;
-		var=&gamma**2 * sigma**2;
+		mean = &gamma * mu +1;
+		var = &gamma**2 * sigma**2;
 		keep dupersid mean var TOTEXP17;
 	run;
 
@@ -610,20 +610,20 @@ run;
 			
 		*Fitting the above model;
 		model TOTEXP17~general(loglik);
-		ods output ParameterEstimates=est_box;
+		ods output ParameterEstimates=box_est;
 	run;
 
        **************************************************;
 
 	*Storing Parameter Estimates;
-	proc transpose data=est_box(keep=parameter estimate) 
-			out=est_box_&i(drop=_name_);
+	proc transpose data=box_est(keep=parameter estimate) 
+			out=box_est_&i(drop=_name_);
 			id parameter;
 			var estimate;
 	run;
 		
 	proc append base=bootstrap_parameter_part2
-        	data=est_box_&i force;
+        	data=box_est_&i force;
        run;
 
     %end;
