@@ -394,7 +394,6 @@ run;
   run;
 	
 	*Store the parameters;
-	*Store the parameters;
  	%parameter(est_all,b0);
 	%parameter(est_all,b1_hibp);
 	%parameter(est_all,b1_chd);
