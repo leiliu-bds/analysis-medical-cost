@@ -8,7 +8,7 @@
 
 #1.A. Input data
   # This file can be created and downloaded by using the SAS code "chapter2_box-cox.sas"
-  box_parameter_part2=read.csv("/.../part2_bootstrap_parameter.csv")
+  box_parameter_part2=read.csv("/.../part2_bootstrap_parameter.csv",header=T)[-1,]
   
   beta = box_parameter_part2[,colnames(box_parameter_part2)[startsWith(colnames(box_parameter_part2),"b")]]
   beta.0=beta$b0
