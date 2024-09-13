@@ -1,4 +1,4 @@
-libname meps "C:\Users\xiaoyi.x\Box\MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter3;
 
 data &data; 
@@ -40,7 +40,7 @@ data &data;
 	if RACETHX=4 OR RACETHX=5 then RACE_OTHER=1; else RACE_OTHER=0; 
 
 	*Categorize region variable (reference group: REGION_SOUTH);
-    if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
+    	if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
 	if REGION17=2 then REGION_MIDWEST=1; else REGION_MIDWEST=0;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
@@ -252,33 +252,33 @@ proc nlmixed data=&data;
 	estimate 'marginal effect-arth' 	exp(gamma0+gamma1_arth)-exp(gamma0);	
 	estimate 'marginal effect-asth' 	exp(gamma0+gamma1_asth)-exp(gamma0);	
 	estimate 'marginal effect-male' 	exp(gamma0+gamma2)-exp(gamma0);	
-	estimate 'marginal effect-hispanic' exp(gamma0+gamma3_hispanic)-exp(gamma0);	
+	estimate 'marginal effect-hispanic' 	exp(gamma0+gamma3_hispanic)-exp(gamma0);	
 	estimate 'marginal effect-black' 	exp(gamma0+gamma3_black)-exp(gamma0);	
 	estimate 'marginal effect-other' 	exp(gamma0+gamma3_other)-exp(gamma0);	
-	estimate 'marginal effect-AGE_18_24'exp(gamma0+gamma4_18)-exp(gamma0);	
-	estimate 'marginal effect-AGE_25_34'exp(gamma0+gamma4_25)-exp(gamma0);	
-	estimate 'marginal effect-AGE_35_44'exp(gamma0+gamma4_35)-exp(gamma0);	
-	estimate 'marginal effect-AGE_45_54'exp(gamma0+gamma4_45)-exp(gamma0);	
-	estimate 'marginal effect-AGE_65_74'exp(gamma0+gamma4_65)-exp(gamma0);	
-	estimate 'marginal effect-AGE_75_85'exp(gamma0+gamma4_75)-exp(gamma0);	
-	estimate 'marginal effect-NORTHEAST'exp(gamma0+gamma5_northeast)-exp(gamma0);	
+	estimate 'marginal effect-AGE_18_24'	exp(gamma0+gamma4_18)-exp(gamma0);	
+	estimate 'marginal effect-AGE_25_34'	exp(gamma0+gamma4_25)-exp(gamma0);	
+	estimate 'marginal effect-AGE_35_44'	exp(gamma0+gamma4_35)-exp(gamma0);	
+	estimate 'marginal effect-AGE_45_54'	exp(gamma0+gamma4_45)-exp(gamma0);	
+	estimate 'marginal effect-AGE_65_74'	exp(gamma0+gamma4_65)-exp(gamma0);	
+	estimate 'marginal effect-AGE_75_85'	exp(gamma0+gamma4_75)-exp(gamma0);	
+	estimate 'marginal effect-NORTHEAST'	exp(gamma0+gamma5_northeast)-exp(gamma0);	
 	estimate 'marginal effect-MIDWEST'	exp(gamma0+gamma5_midwest)-exp(gamma0);	
 	estimate 'marginal effect-WEST' 	exp(gamma0+gamma5_west)-exp(gamma0);		
 	estimate 'marginal effect-IPDIS' 	exp(gamma0+gamma6)-exp(gamma0);		
 
 	*Partial Elasticity;
-	estimate 'partial elasticity-hibp' 		gamma1_hibp;		
-	estimate 'partial elasticity-chd' 		gamma1_chd;
-	estimate 'partial elasticity-strk' 		gamma1_strk;	
-	estimate 'partial elasticity-emph' 		gamma1_emph;	
+	estimate 'partial elasticity-hibp' 	gamma1_hibp;		
+	estimate 'partial elasticity-chd' 	gamma1_chd;
+	estimate 'partial elasticity-strk' 	gamma1_strk;	
+	estimate 'partial elasticity-emph' 	gamma1_emph;	
 	estimate 'partial elasticity-chbron' 	gamma1_chbron;	
-	estimate 'partial elasticity-chol' 		gamma1_chol;	
+	estimate 'partial elasticity-chol' 	gamma1_chol;	
 	estimate 'partial elasticity-cancer' 	gamma1_cancer;	
-	estimate 'partial elasticity-diab' 		gamma1_diab;	
+	estimate 'partial elasticity-diab' 	gamma1_diab;	
 	estimate 'partial elasticity-jtpain' 	gamma1_jtpain;	
-	estimate 'partial elasticity-arth' 		gamma1_arth;	
-	estimate 'partial elasticity-asth' 		gamma1_asth;	
-	estimate 'partial elasticity-male' 		gamma2;	
+	estimate 'partial elasticity-arth' 	gamma1_arth;	
+	estimate 'partial elasticity-asth' 	gamma1_asth;	
+	estimate 'partial elasticity-male' 	gamma2;	
 	estimate 'partial elasticity-hispanic' 	gamma3_hispanic;	
 	estimate 'partial elasticity-black' 	gamma3_black;	
 	estimate 'partial elasticity-other' 	gamma3_other;	
@@ -290,7 +290,7 @@ proc nlmixed data=&data;
 	estimate 'partial elasticity-AGE_75_85'	gamma4_75;	
 	estimate 'partial elasticity-NORTHEAST'	gamma5_northeast;	
 	estimate 'partial elasticity-MIDWEST'	gamma5_midwest;	
-	estimate 'partial elasticity-WEST' 		gamma5_west;		
+	estimate 'partial elasticity-WEST' 	gamma5_west;		
 	estimate 'partial elasticity-IPDIS' 	gamma6;		
 run;
 
@@ -517,7 +517,7 @@ run;
 	  		  
 	  		  gamma0=-2.5 gamma1_hibp=1 gamma1_chd=1 gamma1_strk=1
 	  		  gamma1_emph=-1 gamma1_chbron=1 gamma1_chol=1 gamma1_cancer=1
-	  	      gamma1_diab=1 gamma1_jtpain=1 gamma1_arth=1 gamma1_asth=1
+	  	      	  gamma1_diab=1 gamma1_jtpain=1 gamma1_arth=1 gamma1_asth=1
 	  		  gamma2=-1 gamma3_hispanic=-1 gamma3_black=-1 gamma3_other=-1
 	  		  gamma4_18=-1 gamma4_25=-1 gamma4_35=-1
 	  		  gamma4_45=-1 gamma4_65=1 gamma4_75=1
