@@ -193,46 +193,118 @@ proc nlmixed data=&data;
 
  	*Output parameters;
 	ods output ParameterEstimates=box_est;
-	predict mu out=mu;
-	predict sigma out=sigma;
 run;
 
 ************************************************************;
 ************************************************************;
 
 *2. Calculate residuals;
-data est;
-	set box_est;
-	if parameter="gamma";
-	call symputx('gamma', estimate);
+*2.A. Store the parameters;
+%parameter(box_est,b0);
+%parameter(box_est,b1_hibp);
+%parameter(box_est,b1_chd);
+%parameter(box_est,b1_strk);
+%parameter(box_est,b1_emph);
+%parameter(box_est,b1_chbron);
+%parameter(box_est,b1_chol);
+%parameter(box_est,b1_cancer);
+%parameter(box_est,b1_diab);
+%parameter(box_est,b1_jtpain);
+%parameter(box_est,b1_arth);
+%parameter(box_est,b1_asth);
+%parameter(box_est,b2);
+%parameter(box_est,b3_hispanic);
+%parameter(box_est,b3_black);
+%parameter(box_est,b3_other);
+%parameter(box_est,b4_18);
+%parameter(box_est,b4_25);
+%parameter(box_est,b4_35);
+%parameter(box_est,b4_45);
+%parameter(box_est,b4_65);
+%parameter(box_est,b4_75);
+%parameter(box_est,b5_northeast);
+%parameter(box_est,b5_midwest);
+%parameter(box_est,b5_west);
+%parameter(box_est,b6);
+
+%parameter(box_est,d0);
+%parameter(box_est,d1_hibp);
+%parameter(box_est,d1_chd);
+%parameter(box_est,d1_strk);
+%parameter(box_est,d1_emph);
+%parameter(box_est,d1_chbron);
+%parameter(box_est,d1_chol);
+%parameter(box_est,d1_cancer);
+%parameter(box_est,d1_diab);
+%parameter(box_est,d1_jtpain);
+%parameter(box_est,d1_arth);
+%parameter(box_est,d1_asth);
+%parameter(box_est,d2);
+%parameter(box_est,d3_hispanic);
+%parameter(box_est,d3_black);
+%parameter(box_est,d3_other);
+%parameter(box_est,d4_18);
+%parameter(box_est,d4_25);
+%parameter(box_est,d4_35);
+%parameter(box_est,d4_45);
+%parameter(box_est,d4_65);
+%parameter(box_est,d4_75);
+%parameter(box_est,d5_northeast);
+%parameter(box_est,d5_midwest);
+%parameter(box_est,d5_west);
+%parameter(box_est,d6);
+%parameter(box_est,gamma);
+
+************************************************************;
+
+*2.B. Make predictions of mean and var for Box-Cox transformation using the fitted model;
+data box_pred;
+	set &data;
+
+	mu = &b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
+	  	&b1_emph*EMPH + &b1_chbron*CHBRON + &b1_chol*CHOL + &b1_cancer*CANCER + 
+	  	&b1_diab*DIAB + &b1_jtpain*JTPAIN + &b1_arth*ARTH + &b1_asth*ASTH +
+	  	&b2*MALE + &b3_hispanic*RACE_HISPANIC + &b3_black*RACE_BLACK + &b3_other*RACE_OTHER +
+	  	&b4_18*AGE_18_24 + &b4_25*AGE_25_34 + &b4_35*AGE_35_44 +
+	  	&b4_45*AGE_45_54 + &b4_65*AGE_65_74 + &b4_75*AGE_75_85 +
+	  	&b5_northeast*REGION_NORTHEAST + &b5_midwest*REGION_MIDWEST + &b5_west*REGION_WEST +
+	  	&b6*IPDIS;
+
+	sigma = exp((&d0 + &d1_hibp*HIBP + &d1_chd*CHD + &d1_strk*STRK + 
+			&d1_emph*EMPH + &d1_chbron*CHBRON + &d1_chol*CHOL + &d1_cancer*CANCER + 
+			&d1_diab*DIAB + &d1_jtpain*JTPAIN + &d1_arth*ARTH + &d1_asth*ASTH +
+			&d2*MALE + &d3_hispanic*RACE_HISPANIC + &d3_black*RACE_BLACK + &d3_other*RACE_OTHER +
+			&d4_18*AGE_18_24 + &d4_25*AGE_25_34 + &d4_35*AGE_35_44 +
+			&d4_45*AGE_45_54 + &d4_65*AGE_65_74 + &d4_75*AGE_75_85 +
+			&d5_northeast*REGION_NORTHEAST + &d5_midwest*REGION_MIDWEST + &d5_west*REGION_WEST +
+			&d6*IPDIS)/2);
+
+	*Box-Cox transformation;
+	mean = &gamma * mu +1;	
+	var = &gamma**2 * sigma**2; 	
+	keep dupersid mean var TOTEXP17;
 run;
 
-data output;
-	merge mu (rename=(pred=mu_pred))
-		sigma (rename=(pred=sigma_pred));
-	by dupersid;
-	mean=&gamma * mu_pred +1;
-	var=&gamma**2 * sigma_pred**2; 	
-run;
-
-data box;
-	set output;
+* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
+data box_transformation;
+	set box_pred;
 	array normalvalue [1000] nv1-nv1000;
 	array predvalue[1000] pred1-pred1000;
-	
-		* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
-		do i=1 to 1000;
-			NormalValue[i] = rand("Normal", mean, sqrt(var));
-			predvalue[i]= normalvalue[i]**(1/&gamma);
-		end;
-		
-		meanpred= mean(of predvalue[*]);			
+
+	do i=1 to 1000;
+		NormalValue[i] = rand("Normal", mean, sqrt(var));
+		predvalue[i] = normalvalue[i]**(1/&gamma);
+	end;	
+	meanpred = mean(of predvalue[*]);
 run;
 
+************************************************************;
+
+*2.C. Calculate residuals;	
 data box_residual;
-	set box;
- 	resid=totexp17-meanpred;
-	abs = abs(resid);						
+	set box_transformation;
+	resid=totexp17-meanpred;				
+	abs = abs(resid);					
 run;
 
 proc univariate data=box_residual;
@@ -444,13 +516,13 @@ run;
 		keep dupersid mean var TOTEXP17;
 	run;
 
+	* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
 	data pred_&fold.;
 		set test_&fold.;
 		array normalvalue [1000] nv1-nv1000;
 		array predvalue[1000] pred1-pred1000;
 		call streaminit(123);
 		
-		* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
 		do i=1 to 1000;
 			NormalValue[i] = rand("Normal", mean, sqrt(var));
 			predvalue[i]= normalvalue[i]**(1/&gamma);
