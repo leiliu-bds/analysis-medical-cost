@@ -1,4 +1,4 @@
-libname meps "C:\Users\xiaoyi.x\Box\MEPS";
+libname meps "/.../MEPS"; 	/* Note: You can modify the "..." to specify the desired directory path for MEPS data */
 %let data = meps_chapter3;
 
 data &data; 
@@ -40,7 +40,7 @@ data &data;
 	if RACETHX=4 OR RACETHX=5 then RACE_OTHER=1; else RACE_OTHER=0; 
 
 	*Categorize region variable (reference group: REGION_SOUTH);
-    if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
+    	if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
 	if REGION17=2 then REGION_MIDWEST=1; else REGION_MIDWEST=0;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
@@ -171,7 +171,7 @@ proc nlmixed data=&data;
 	*Define initial values;
   	parms a0=2.1073 a1_hibp=0.9031 a1_chd=0.7072 a1_strk=0.2085 
   		  a1_emph=-0.1208 a1_chbron=1.1689 a1_chol=0.8573 a1_cancer=1.0304 
-  	      a1_diab=1.4906 a1_jtpain=0.5904 a1_arth=0.6471 a1_asth=0.7268
+  	      	  a1_diab=1.4906 a1_jtpain=0.5904 a1_arth=0.6471 a1_asth=0.7268
   		  a2=-1.0777 a3_hispanic=-1.2316 a3_black=-0.8807 a3_other=-0.6731	
   		  a4_18=-0.3408 a4_25=-0.3204 a4_35=-0.2818	
   		  a4_45=-0.1783	a4_65=0.7202 a4_75=0.7106
@@ -383,6 +383,7 @@ data box_transformation;
 		NormalValue[i] = rand("Normal", mean, sqrt(var));
 		predvalue[i] = normalvalue[i]**(1/&gamma);
 	end;	
+ 
 	meanpred = p* mean(of predvalue[*]);
 run;
 
@@ -726,7 +727,6 @@ run;
 *4. Bootstrap dataset for calculating the standard error for incremental effect and partial elasticity;
 *4.A. Setting up Bootstrap Parameters;
 %let n_bootstrap = 100;
-*%let seed = 123;
 
 ************************************************************;
 
@@ -897,8 +897,8 @@ run;
 ************************************************************;
 
 *4.E. Output bootstrap;
-
-/*Note: The file "bootstrap_parameter.csv" can be used to calculate se for incremental effect and partial elasticity using the R file "chapter3_box-cox_rate_of_change.R")*/
+/* Note: The content of "bootstrap_parameter.csv" may vary between runs due to the randomness in the SAS bootstrap process. */
+/* Note: The file "bootstrap_parameter.csv" can be used to calculate the standard errors for incremental effect and partial elasticity in the R script "chapter3_box-cox_rate_of_change.R". */
 proc export data=bootstrap_parameter
 	     outfile="/.../bootstrap_parameter.csv"
 	     dbms=csv replace;
@@ -910,6 +910,3 @@ run;
 	     outfile="/.../bootstrap_stats.csv"
 	     dbms=csv replace;
 run;*/
-
-
-
