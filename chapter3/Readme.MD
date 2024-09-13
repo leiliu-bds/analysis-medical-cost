@@ -23,8 +23,8 @@
 
   - Box-Cox transformation
     - Files: 
-      - [chapter3_box-cox.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_box-cox.sas): Handles model fitting, residuals, CV residuals, and bootstrap resampling for the Box-Cox transformation. 
-      - [chapter3_box-cox_rate_of_change.R](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_box-cox_rate_of_change.R): Implements the calculation of incremental effect and partial elasticity using R for the Box-Cox transformation model.
+      - [chapter3_2pm_box-cox.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_2pm_box-cox.sas): Handles model fitting, residuals, CV residuals, and bootstrap resampling for the Box-Cox transformation. 
+      - [chapter3_2pm_box-cox_rate_of_change.R](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_2pm_box-cox_rate_of_change.R): Implements the calculation of incremental effect and partial elasticity using R for the Box-Cox transformation model.
 
   - Marginalized 2PM
     - File: [chapter3_m2pm_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_m2pm_log-normal.sas) 
