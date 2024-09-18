@@ -313,8 +313,8 @@ proc univariate data=lognormal_residual;
 run;
 
 /* Log-Normal Model results: 
-   Mean residual: -850	
-   Mean absolute residual: 5910*/
+   Mean residual: -850.2	
+   Mean absolute residual: 5909.9*/
 
 ************************************************************;
 ************************************************************;
@@ -606,5 +606,5 @@ proc univariate data=cv_residual;
 run;
 
 /* Log Normal Model results: 
-   Mean cross-validation residual: -851.0
-   Mean cross-validation absolute residual: 5925.7*/
+   Mean cross-validation residual: -850.5
+   Mean cross-validation absolute residual: 5925.5*/
