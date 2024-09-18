@@ -319,8 +319,8 @@ proc univariate data=logskewnormal_residual;
 run;
 
 /* Log-Skew-Normal Model results: 
-   Mean residual: -850				
-   Mean absolute residual: 5910*/
+   Mean residual: -849.5			
+   Mean absolute residual: 5909.5*/
 
 ************************************************************;
 ************************************************************;
@@ -603,14 +603,11 @@ run;
 
 *3.E. Calculate residuals for Cross-validation (5-fold validation);    
 * Combine predictions from all folds;
-data cv_pred;
+data cv_residual;
     merge pred_1 pred_2 pred_3 pred_4 pred_5;
     by dupersid;
-run;
 
-* Calculate residuals and absolute residuals;
-data cv_residual;
-    set cv_pred;
+    * Calculate residuals and absolute residuals;
     resid = TOTEXP17 - pred;
     absresid = abs(TOTEXP17 - pred);
 run;
@@ -621,5 +618,5 @@ proc univariate data=cv_residual;
 run;
 
 /* Log-Skew-Normal Model results: 
-   Mean cross-validation residual: -849.44083
-   Mean cross-validation absolute residual: 5925.06744 */
+   Mean cross-validation residual: -849.5
+   Mean cross-validation absolute residual: 5925.1 */
