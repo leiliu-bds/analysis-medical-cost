@@ -317,8 +317,8 @@ proc univariate data=gamma_residual;
 run;
 
 /* Generalized Gamma Model results: 
-   Mean residual: -348			
-   Mean absolute residual: 5651 */
+   Mean residual: -347.5			
+   Mean absolute residual: 5650.5 */
 
 ************************************************************;
 ************************************************************;
@@ -617,5 +617,5 @@ proc univariate data=cv_residual;
 run;
 
 /* Generalized Gamma Model results: 
-   Mean cross-validation residual: -347.26038
-   Mean cross-validation absolute residual: 5663.79114 */
+   Mean cross-validation residual: -347.1
+   Mean cross-validation absolute residual: 5663.7 */
