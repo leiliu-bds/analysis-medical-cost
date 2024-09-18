@@ -248,21 +248,21 @@ proc nlmixed data=&data;
 	predict p*E_y out=gamma;	
 	
   	*Marginal Effects;
-	estimate 'marginal effect-hibp' 		exp(a0 + a1_hibp)/(1+exp(a0 + a1_hibp))*exp(b0+b1_hibp+exp((d0+d1_hibp)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_hibp)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-chd' 			exp(a0 + a1_chd)/(1+exp(a0 + a1_chd))*exp(b0+b1_chd+exp((d0+d1_chd)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chd)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-strk' 		exp(a0 + a1_strk)/(1+exp(a0 + a1_strk))*exp(b0+b1_strk+exp((d0+d1_strk)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_strk)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-emph' 		exp(a0 + a1_emph)/(1+exp(a0 + a1_emph))*exp(b0+b1_emph+exp((d0+d1_emph)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_emph)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-chbron' 		exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+exp((d0+d1_chbron)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chbron)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-chol' 		exp(a0 + a1_chol)/(1+exp(a0 + a1_chol))*exp(b0+b1_chol+exp((d0+d1_chol)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chol)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-cancer' 		exp(a0 + a1_cancer)/(1+exp(a0 + a1_cancer))*exp(b0+b1_cancer+exp((d0+d1_cancer)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_cancer)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-diab' 		exp(a0 + a1_diab)/(1+exp(a0 + a1_diab))*exp(b0+b1_diab+exp((d0+d1_diab)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_diab)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-jtpain' 		exp(a0 + a1_jtpain)/(1+exp(a0 + a1_jtpain))*exp(b0+b1_jtpain+exp((d0+d1_jtpain)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_jtpain)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-arth' 		exp(a0 + a1_arth)/(1+exp(a0 + a1_arth))*exp(b0+b1_arth+exp((d0+d1_arth)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_arth)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-asth' 		exp(a0 + a1_asth)/(1+exp(a0 + a1_asth))*exp(b0+b1_asth+exp((d0+d1_asth)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_asth)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-male' 		exp(a0 + a2)/(1+exp(a0 + a2))*exp(b0+b2+exp((d0+d2)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d2)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-hibp' 	exp(a0 + a1_hibp)/(1+exp(a0 + a1_hibp))*exp(b0+b1_hibp+exp((d0+d1_hibp)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_hibp)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-chd' 		exp(a0 + a1_chd)/(1+exp(a0 + a1_chd))*exp(b0+b1_chd+exp((d0+d1_chd)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chd)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-strk' 	exp(a0 + a1_strk)/(1+exp(a0 + a1_strk))*exp(b0+b1_strk+exp((d0+d1_strk)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_strk)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-emph' 	exp(a0 + a1_emph)/(1+exp(a0 + a1_emph))*exp(b0+b1_emph+exp((d0+d1_emph)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_emph)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-chbron' 	exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+exp((d0+d1_chbron)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chbron)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-chol' 	exp(a0 + a1_chol)/(1+exp(a0 + a1_chol))*exp(b0+b1_chol+exp((d0+d1_chol)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_chol)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-cancer' 	exp(a0 + a1_cancer)/(1+exp(a0 + a1_cancer))*exp(b0+b1_cancer+exp((d0+d1_cancer)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_cancer)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-diab' 	exp(a0 + a1_diab)/(1+exp(a0 + a1_diab))*exp(b0+b1_diab+exp((d0+d1_diab)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_diab)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-jtpain' 	exp(a0 + a1_jtpain)/(1+exp(a0 + a1_jtpain))*exp(b0+b1_jtpain+exp((d0+d1_jtpain)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_jtpain)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-arth' 	exp(a0 + a1_arth)/(1+exp(a0 + a1_arth))*exp(b0+b1_arth+exp((d0+d1_arth)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_arth)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-asth' 	exp(a0 + a1_asth)/(1+exp(a0 + a1_asth))*exp(b0+b1_asth+exp((d0+d1_asth)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d1_asth)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-male' 	exp(a0 + a2)/(1+exp(a0 + a2))*exp(b0+b2+exp((d0+d2)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d2)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
 	estimate 'marginal effect-hispanic' 	exp(a0 + a3_hispanic)/(1+exp(a0 + a3_hispanic))*exp(b0+b3_hispanic+exp((d0+d3_hispanic)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d3_hispanic)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-black' 		exp(a0 + a3_black)/(1+exp(a0 + a3_black))*exp(b0+b3_black+exp((d0+d3_black)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d3_black)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
-	estimate 'marginal effect-other' 		exp(a0 + a3_other)/(1+exp(a0 + a3_other))*exp(b0+b3_other+exp((d0+d3_other)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d3_other)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-black' 	exp(a0 + a3_black)/(1+exp(a0 + a3_black))*exp(b0+b3_black+exp((d0+d3_black)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d3_black)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
+	estimate 'marginal effect-other' 	exp(a0 + a3_other)/(1+exp(a0 + a3_other))*exp(b0+b3_other+exp((d0+d3_other)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d3_other)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
 	estimate 'marginal effect-AGE_18_24'	exp(a0 + a4_18)/(1+exp(a0 + a4_18))*exp(b0+b4_18+exp((d0+d4_18)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d4_18)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
 	estimate 'marginal effect-AGE_25_34'	exp(a0 + a4_25)/(1+exp(a0 + a4_25))*exp(b0+b4_25+exp((d0+d4_25)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d4_25)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
 	estimate 'marginal effect-AGE_35_44'	exp(a0 + a4_35)/(1+exp(a0 + a4_35))*exp(b0+b4_35+exp((d0+d4_35)/2)*log(k**2)/k+log(gamma(1/(k**2)+exp((d0+d4_35)/2)/k))-log(gamma(1/(k**2))))-exp(a0)/(1+exp(a0))*exp(b0+exp(d0/2)*log(k**2)/k+log(gamma(1/(k**2)+exp(d0/2)/k))-log(gamma(1/(k**2))));
@@ -428,39 +428,38 @@ run;
 	
 	  	expteta = exp(teta);
 	  	p = expteta / (1+expteta);
-	  	
+
+		*Location;
+		mu =   b0 + b1_hibp*HIBP + b1_chd*CHD + b1_strk*STRK + 
+	  		   b1_emph*EMPH + b1_chbron*CHBRON + b1_chol*CHOL + b1_cancer*CANCER + 
+	  		   b1_diab*DIAB + b1_jtpain*JTPAIN + b1_arth*ARTH + b1_asth*ASTH +
+	  		   b2*MALE + b3_hispanic*RACE_HISPANIC + b3_black*RACE_BLACK + b3_other*RACE_OTHER +
+	  		   b4_18*AGE_18_24 + b4_25*AGE_25_34 + b4_35*AGE_35_44 +
+	  		   b4_45*AGE_45_54 + b4_65*AGE_65_74 + b4_75*AGE_75_85 +
+	  		   b5_northeast*REGION_NORTHEAST + b5_midwest*REGION_MIDWEST + b5_west*REGION_WEST +
+	  		   b6*IPDIS;  
+	  		   
+	  	*Scale (heteroscedasticity);	 
+	  	sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
+		  		   d1_emph*EMPH + d1_chbron*CHBRON + d1_chol*CHOL + d1_cancer*CANCER + 
+		  		   d1_diab*DIAB + d1_jtpain*JTPAIN + d1_arth*ARTH + d1_asth*ASTH +
+		  		   d2*MALE + d3_hispanic*RACE_HISPANIC + d3_black*RACE_BLACK + d3_other*RACE_OTHER +
+		  		   d4_18*AGE_18_24 + d4_25*AGE_25_34 + d4_35*AGE_35_44 +
+		  		   d4_45*AGE_45_54 + d4_65*AGE_65_74 + d4_75*AGE_75_85 +
+		  		   d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST +
+		  		   d6*IPDIS)/2);  
+	
 	  	*for zero-cost;
 		if BTOTEXP17 = 0 then loglik = log(1-p);
 	  	
 	  	*for positive-cost;
 	  	if BTOTEXP17 = 1 then do;
-	  	
-	  	  	*Location;
-			mu =   b0 + b1_hibp*HIBP + b1_chd*CHD + b1_strk*STRK + 
-		  		   b1_emph*EMPH + b1_chbron*CHBRON + b1_chol*CHOL + b1_cancer*CANCER + 
-		  		   b1_diab*DIAB + b1_jtpain*JTPAIN + b1_arth*ARTH + b1_asth*ASTH +
-		  		   b2*MALE + b3_hispanic*RACE_HISPANIC + b3_black*RACE_BLACK + b3_other*RACE_OTHER +
-		  		   b4_18*AGE_18_24 + b4_25*AGE_25_34 + b4_35*AGE_35_44 +
-		  		   b4_45*AGE_45_54 + b4_65*AGE_65_74 + b4_75*AGE_75_85 +
-		  		   b5_northeast*REGION_NORTHEAST + b5_midwest*REGION_MIDWEST + b5_west*REGION_WEST +
-		  		   b6*IPDIS;  
-		  		   
-		  	*Scale (heteroscedasticity);	 
-		  	sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
-			  		   d1_emph*EMPH + d1_chbron*CHBRON + d1_chol*CHOL + d1_cancer*CANCER + 
-			  		   d1_diab*DIAB + d1_jtpain*JTPAIN + d1_arth*ARTH + d1_asth*ASTH +
-			  		   d2*MALE + d3_hispanic*RACE_HISPANIC + d3_black*RACE_BLACK + d3_other*RACE_OTHER +
-			  		   d4_18*AGE_18_24 + d4_25*AGE_25_34 + d4_35*AGE_35_44 +
-			  		   d4_45*AGE_45_54 + d4_65*AGE_65_74 + d4_75*AGE_75_85 +
-			  		   d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST +
-			  		   d6*IPDIS)/2);  
-			  		   
 			eta = abs(k)**(-2);
 			u = sign(k)*(log(TOTEXP17)-mu)/sigma;
 			value1 = (eta-0.5)*log(eta) - log(sigma) - lgamma(eta) - log(TOTEXP17);
-			loglik = log(p) + value1 + u*sqrt(eta) - eta*exp(abs(k)*u);			
-		end;
-	
+			loglik = log(p) + value1 + u*sqrt(eta) - eta*exp(abs(k)*u);
+		end;  		   
+			
 		*Fit the model above;
 		model TOTEXP17~general(loglik);
 		
