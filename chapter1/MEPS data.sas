@@ -23,15 +23,15 @@ data &data;
 	
 	*Categorize age variable (reference group: age 55-64);
 	if (AGE17X >= 18 and AGE17X < 25) then AGE_18_24 = 1; else AGE_18_24 = 0;
-    	if (AGE17X >= 25 and AGE17X < 35) then AGE_25_34 = 1; else AGE_25_34 = 0;
-    	if (AGE17X >= 35 and AGE17X < 45) then AGE_35_44 = 1; else AGE_35_44 = 0;
-    	if (AGE17X >= 45 and AGE17X < 55) then AGE_45_54 = 1; else AGE_45_54 = 0;
-    	if (AGE17X >= 55 and AGE17X < 65) then AGE_55_64 = 1; else AGE_55_64 = 0; 							
-    	if (AGE17X >= 65 and AGE17X < 75) then AGE_65_74 = 1; else AGE_65_74 = 0;
-    	if (AGE17X >= 75 and AGE17X <= 85) then AGE_75_85 = 1; else AGE_75_85 = 0;
+	if (AGE17X >= 25 and AGE17X < 35) then AGE_25_34 = 1; else AGE_25_34 = 0;
+	if (AGE17X >= 35 and AGE17X < 45) then AGE_35_44 = 1; else AGE_35_44 = 0;
+	if (AGE17X >= 45 and AGE17X < 55) then AGE_45_54 = 1; else AGE_45_54 = 0;
+	if (AGE17X >= 55 and AGE17X < 65) then AGE_55_64 = 1; else AGE_55_64 = 0; 							
+	if (AGE17X >= 65 and AGE17X < 75) then AGE_65_74 = 1; else AGE_65_74 = 0;
+	if (AGE17X >= 75 and AGE17X <= 85) then AGE_75_85 = 1; else AGE_75_85 = 0;
 	
-	*Categorize sex variable;
-	if SEX=2 then MALE=0; else if SEX = 1 then MALE=1;		*Sex: 1=MALE 2=FEMALE;					
+	*Categorize sex variable (Sex: 1=MALE 2=FEMALE);
+	if SEX=2 then MALE=0; else if SEX = 1 then MALE=1;						
 
 	*Categorize race/ethnicity variable (reference group: RACE_WHITE);
 	if RACETHX=1 then RACE_HISPANIC=1; else RACE_HISPANIC=0;	
@@ -45,7 +45,7 @@ data &data;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
 
-	*Categorize health conditions variable (reference group: REGION_SOUTH);
+	*Categorize health conditions variable;
 	if HIBPDX=2 then HIBP=0; else if HIBPDX=1 then HIBP=1; 
 	if CHDDX=2 then CHD=0; else if CHDDX=1 then CHD=1; 
 	if STRKDX=2 then STRK=0; else if STRKDX=1 then STRK=1; 
@@ -59,10 +59,9 @@ data &data;
 	if ASTHDX=2 then ASTH=0; else if ASTHDX=1 then ASTH=1; 
 
 	*Categorize hospitalization variable;
-	if IPDIS17>=1 then IPDIS=1; else if IPDIS17=0 then IPDIS=0;				*IDPIS: IPDIS17>=1;
+	if IPDIS17>=1 then IPDIS=1; else if IPDIS17=0 then IPDIS=0;				
 
 	*Categorize total expense variable;
 	if TOTEXP17>0 then BTOTEXP17 = 1; else if TOTEXP17=0 then BTOTEXP17 = 0;
 	FAMID=put(duid, z5.)||trim(FAMIDYR); 
 run;
-
