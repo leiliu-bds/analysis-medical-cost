@@ -168,7 +168,7 @@ proc nlmixed data=&data;
 	*Define initial values;
 	parms a0=1.66 a1_hibp=0.79 a1_chd=0.60 a1_strk=0.20
   		  a1_emph=-0.19 a1_chbron=1.10 a1_chol=0.79 a1_cancer=0.97 
-  	      a1_diab=1.27 a1_jtpain=0.53 a1_arth=0.59 a1_asth=0.63
+  	      	  a1_diab=1.27 a1_jtpain=0.53 a1_arth=0.59 a1_asth=0.63
   		  a2=-0.89 a3_hispanic=-1.07 a3_black=-0.76 a3_other=-0.61
   		  a4_18=-0.25 a4_25=-0.21 a4_35=-0.19
   		  a4_45=-0.10 a4_65=0.64 a4_75=0.65
@@ -176,7 +176,7 @@ proc nlmixed data=&data;
   		  
   		  gamma0=-2.5 gamma1_hibp=1 gamma1_chd=1 gamma1_strk=1
   		  gamma1_emph=-1 gamma1_chbron=1 gamma1_chol=1 gamma1_cancer=1
-  	      gamma1_diab=1 gamma1_jtpain=1 gamma1_arth=1 gamma1_asth=1
+  	      	  gamma1_diab=1 gamma1_jtpain=1 gamma1_arth=1 gamma1_asth=1
   		  gamma2=-1 gamma3_hispanic=-1 gamma3_black=-1 gamma3_other=-1
   		  gamma4_18=-1 gamma4_25=-1 gamma4_35=-1
   		  gamma4_45=-1 gamma4_65=1 gamma4_75=1
@@ -193,6 +193,7 @@ proc nlmixed data=&data;
   		  d5_northeast=0.02451 d5_midwest=-0.05134 d5_west=-0.04176	
   		  d6=-0.6133
   		  ;  	
+
 	*log-likelihood;
   	teta = a0 + a1_hibp*HIBP + a1_chd*CHD + a1_strk*STRK + 
   		   a1_emph*EMPH + a1_chbron*CHBRON + a1_chol*CHOL + a1_cancer*CANCER + 
@@ -204,14 +205,8 @@ proc nlmixed data=&data;
 
  	p = 1/(1+exp(-teta));
  	
-	*for zero-cost;
- 	if BTOTEXP17 = 0 then loglik = log(1-p);
-
-	*for positive-cost;
- 	if BTOTEXP17 = 1 then do;
-
-		*Scale (heteroscedasticity) from traditional 2PM;
-	 	sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
+	*Scale (heteroscedasticity) from traditional 2PM;
+	 sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
 			  		   d1_emph*EMPH + d1_chbron*CHBRON + d1_chol*CHOL + d1_cancer*CANCER + 
 			  		   d1_diab*DIAB + d1_jtpain*JTPAIN + d1_arth*ARTH + d1_asth*ASTH +
 			  		   d2*MALE + d3_hispanic*RACE_HISPANIC + d3_black*RACE_BLACK + d3_other*RACE_OTHER +
@@ -220,8 +215,8 @@ proc nlmixed data=&data;
 			  		   d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST +
 			  		   d6*IPDIS)/2);   		   	
 
-		*Location from traditional 2PM;
-	 	mu = gamma0 + gamma1_hibp*HIBP + gamma1_chd*CHD + gamma1_strk*STRK + 
+	*Location from traditional 2PM;
+ 	mu = gamma0 + gamma1_hibp*HIBP + gamma1_chd*CHD + gamma1_strk*STRK + 
 	  		   gamma1_emph*EMPH + gamma1_chbron*CHBRON + gamma1_chol*CHOL + gamma1_cancer*CANCER + 
 	  		   gamma1_diab*DIAB + gamma1_jtpain*JTPAIN + gamma1_arth*ARTH + gamma1_asth*ASTH +
 	  		   gamma2*MALE + gamma3_hispanic*RACE_HISPANIC + gamma3_black*RACE_BLACK + gamma3_other*RACE_OTHER +
@@ -229,15 +224,21 @@ proc nlmixed data=&data;
 	  		   gamma4_45*AGE_45_54 + gamma4_65*AGE_65_74 + gamma4_75*AGE_75_85 +
 	  		   gamma5_northeast*REGION_NORTHEAST + gamma5_midwest*REGION_MIDWEST + gamma5_west*REGION_WEST+
 	  		   gamma6*IPDIS - log(p)-sigma**2/2;
-  		
-   		loglik = log(p)-log(TOTEXP17)-.5*log(2*constant("pi"))-log(sigma)-(1/(2*sigma**2))*(log(TOTEXP17)-mu)**2;
- 	end;
+
+	*for zero-cost;
+ 	if BTOTEXP17 = 0 then loglik = log(1-p);
+
+	*for positive-cost;
+ 	if BTOTEXP17 = 1 then loglik = log(p)-log(TOTEXP17)-.5*log(2*constant("pi"))-log(sigma)-(1/(2*sigma**2))*(log(TOTEXP17)-mu)**2;
+
+ 	*Expected Value;
+	E_y=exp(mu + sigma**2/2);
 
 	*Fit the model above;
-	model TOTEXP17~general(loglik);
+	model TOTEXP17~general(loglik); 
 	
 	*Output parameters;
-	ods output ParameterEstimates=m2pm_est; 
+	predict p*E_y out=m2pm;	
 	
 	*Marginal Effects;
  	estimate 'marginal effect-hibp' 	exp(gamma0+gamma1_hibp)-exp(gamma0);		
@@ -298,134 +299,8 @@ run;
 ************************************************************;
 
 *2. Calculate residuals;
-*2.A. Store the parameters;
-%parameter(m2pm_est,a0);
-%parameter(m2pm_est,a1_hibp);
-%parameter(m2pm_est,a1_chd);
-%parameter(m2pm_est,a1_strk);
-%parameter(m2pm_est,a1_emph);
-%parameter(m2pm_est,a1_chbron);
-%parameter(m2pm_est,a1_chol);
-%parameter(m2pm_est,a1_cancer);
-%parameter(m2pm_est,a1_diab);
-%parameter(m2pm_est,a1_jtpain);
-%parameter(m2pm_est,a1_arth);
-%parameter(m2pm_est,a1_asth);
-%parameter(m2pm_est,a2);
-%parameter(m2pm_est,a3_hispanic);
-%parameter(m2pm_est,a3_black);
-%parameter(m2pm_est,a3_other);
-%parameter(m2pm_est,a4_18);
-%parameter(m2pm_est,a4_25);
-%parameter(m2pm_est,a4_35);
-%parameter(m2pm_est,a4_45);
-%parameter(m2pm_est,a4_65);
-%parameter(m2pm_est,a4_75);
-%parameter(m2pm_est,a5_northeast);
-%parameter(m2pm_est,a5_midwest);
-%parameter(m2pm_est,a5_west);
-
-%parameter(m2pm_est,gamma0);
-%parameter(m2pm_est,gamma1_hibp);
-%parameter(m2pm_est,gamma1_chd);
-%parameter(m2pm_est,gamma1_strk);
-%parameter(m2pm_est,gamma1_emph);
-%parameter(m2pm_est,gamma1_chbron);
-%parameter(m2pm_est,gamma1_chol);
-%parameter(m2pm_est,gamma1_cancer);
-%parameter(m2pm_est,gamma1_diab);
-%parameter(m2pm_est,gamma1_jtpain);
-%parameter(m2pm_est,gamma1_arth);
-%parameter(m2pm_est,gamma1_asth);
-%parameter(m2pm_est,gamma2);
-%parameter(m2pm_est,gamma3_hispanic);
-%parameter(m2pm_est,gamma3_black);
-%parameter(m2pm_est,gamma3_other);
-%parameter(m2pm_est,gamma4_18);
-%parameter(m2pm_est,gamma4_25);
-%parameter(m2pm_est,gamma4_35);
-%parameter(m2pm_est,gamma4_45);
-%parameter(m2pm_est,gamma4_65);
-%parameter(m2pm_est,gamma4_75);
-%parameter(m2pm_est,gamma5_northeast);
-%parameter(m2pm_est,gamma5_midwest);
-%parameter(m2pm_est,gamma5_west);
-%parameter(m2pm_est,gamma6);
-
-%parameter(m2pm_est,d0);
-%parameter(m2pm_est,d1_hibp);
-%parameter(m2pm_est,d1_chd);
-%parameter(m2pm_est,d1_strk);
-%parameter(m2pm_est,d1_emph);
-%parameter(m2pm_est,d1_chbron);
-%parameter(m2pm_est,d1_chol);
-%parameter(m2pm_est,d1_cancer);
-%parameter(m2pm_est,d1_diab);
-%parameter(m2pm_est,d1_jtpain);
-%parameter(m2pm_est,d1_arth);
-%parameter(m2pm_est,d1_asth);
-%parameter(m2pm_est,d2);
-%parameter(m2pm_est,d3_hispanic);
-%parameter(m2pm_est,d3_black);
-%parameter(m2pm_est,d3_other);
-%parameter(m2pm_est,d4_18);
-%parameter(m2pm_est,d4_25);
-%parameter(m2pm_est,d4_35);
-%parameter(m2pm_est,d4_45);
-%parameter(m2pm_est,d4_65);
-%parameter(m2pm_est,d4_75);
-%parameter(m2pm_est,d5_northeast);
-%parameter(m2pm_est,d5_midwest);
-%parameter(m2pm_est,d5_west);
-%parameter(m2pm_est,d6);
-
-************************************************************;
-
-*2.B. Make predictions using the fitted model;
-data m2pm_pred;
-    set &data;
-
- 	teta = &a0 + &a1_hibp*HIBP + &a1_chd*CHD + &a1_strk*STRK + 
-  		   &a1_emph*EMPH + &a1_chbron*CHBRON + &a1_chol*CHOL + &a1_cancer*CANCER + 
-  		   &a1_diab*DIAB + &a1_jtpain*JTPAIN + &a1_arth*ARTH + &a1_asth*ASTH +
-  		   &a2*MALE + &a3_hispanic*RACE_HISPANIC + &a3_black*RACE_BLACK + &a3_other*RACE_OTHER +
-  		   &a4_18*AGE_18_24 + &a4_25*AGE_25_34 + &a4_35*AGE_35_44 +
-  		   &a4_45*AGE_45_54 + &a4_65*AGE_65_74 + &a4_75*AGE_75_85 +
-  		   &a5_northeast*REGION_NORTHEAST + &a5_midwest*REGION_MIDWEST + &a5_west*REGION_WEST;
-
-  	expteta = exp(teta);
-  	p = expteta / (1+expteta);
-
-	sigma = exp((&d0 + &d1_hibp*HIBP + &d1_chd*CHD + &d1_strk*STRK + 
-		&d1_emph*EMPH + &d1_chbron*CHBRON + &d1_chol*CHOL + &d1_cancer*CANCER + 
-		&d1_diab*DIAB + &d1_jtpain*JTPAIN + &d1_arth*ARTH + &d1_asth*ASTH +
-		&d2*MALE + &d3_hispanic*RACE_HISPANIC + &d3_black*RACE_BLACK + &d3_other*RACE_OTHER +
-		&d4_18*AGE_18_24 + &d4_25*AGE_25_34 + &d4_35*AGE_35_44 +
-		&d4_45*AGE_45_54 + &d4_65*AGE_65_74 + &d4_75*AGE_75_85 +
-		&d5_northeast*REGION_NORTHEAST + &d5_midwest*REGION_MIDWEST + &d5_west*REGION_WEST +
-		&d6*IPDIS)/2);
-
-	*Location from traditional 2PM;
- 	mu = &gamma0 + &gamma1_hibp*HIBP + &gamma1_chd*CHD + &gamma1_strk*STRK + 
-  		   &gamma1_emph*EMPH + &gamma1_chbron*CHBRON + &gamma1_chol*CHOL + &gamma1_cancer*CANCER + 
-  		   &gamma1_diab*DIAB + &gamma1_jtpain*JTPAIN + &gamma1_arth*ARTH + &gamma1_asth*ASTH +
-  		   &gamma2*MALE + &gamma3_hispanic*RACE_HISPANIC + &gamma3_black*RACE_BLACK + &gamma3_other*RACE_OTHER +
-  		   &gamma4_18*AGE_18_24 + &gamma4_25*AGE_25_34 + &gamma4_35*AGE_35_44 +
-  		   &gamma4_45*AGE_45_54 + &gamma4_65*AGE_65_74 + &gamma4_75*AGE_75_85 +
-  		   &gamma5_northeast*REGION_NORTHEAST + &gamma5_midwest*REGION_MIDWEST + &gamma5_west*REGION_WEST+
-  		   &gamma6*IPDIS - log(p)-sigma**2/2;
-	  		   
-	E_y = exp(mu+sigma**2/2);
-	pred = p*E_y;
-
-	keep dupersid mu sigma pred TOTEXP17;
-run;
-
-************************************************************;
-
-*2.C. Calculate residuals;
 data m2pm_residual;
-	set m2pm_pred;
+	set m2pm;
 	resid = TOTEXP17 - pred;
 	abs = abs(resid);
 run;
@@ -435,7 +310,7 @@ proc univariate data=m2pm_residual;
 run;
 
 /* Marginalized two-part model with log normal distribution results: 
-   Mean residual: -464.3	
+   Mean residual: -463.4		
    Mean absolute residual: 5663.8*/
 
 ************************************************************;
@@ -712,16 +587,13 @@ run;
 
 ************************************************************;
 
-*3.E. Calculate residuals for Cross-validation (5-fold validation);    
+*3.D. Calculate residuals for Cross-validation (5-fold validation);    
 * Combine predictions from all folds;
-data cv_pred;
+data cv_residual;
     merge pred_1 pred_2 pred_3 pred_4 pred_5;
     by dupersid;
-run;
-
-* Calculate residuals and absolute residuals;
-data cv_residual;
-    set cv_pred;
+    
+    * Calculate residuals and absolute residuals;
     resid = TOTEXP17 - pred;
     absresid = abs(TOTEXP17 - pred);
 run;
