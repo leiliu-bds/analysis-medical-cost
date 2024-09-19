@@ -80,91 +80,7 @@ run;
 ************************************************************;
 ************************************************************;
 
-* Macro to save logistic regression coefficients into macro variables;
-%let b0=b0;
-%let b1_hibp=b1_hibp;
-%let b1_chd=b1_chd;
-%let b1_strk=b1_strk;
-%let b1_emph=b1_emph;
-%let b1_chbron=b1_chbron;
-%let b1_chol=b1_chol;
-%let b1_cancer=b1_cancer;
-%let b1_diab=b1_diab;
-%let b1_jtpain=b1_jtpain;
-%let b1_arth=b1_arth;
-%let b1_asth=b1_asth;
-%let b2=b2;
-%let b3_hispanic=b3_hispanic;
-%let b3_black=b3_black;
-%let b3_other=b3_other;
-%let b4_18=b4_18;
-%let b4_25=b4_25;
-%let b4_35=b4_35;
-%let b4_45=b4_45;
-%let b4_65=b4_65;
-%let b4_75=b4_75;
-%let b5_northeast=b5_northeast;
-%let b5_midwest=b5_midwest;
-%let b5_west=b5_west;
-
-%macro proc_logistic(dataset);
-	data _null_;set &dataset.;where variable="Intercept";estimate_num = input(estimate, best12.);call symput("b0",estimate_num);run;
-	data _null_;set &dataset.;where variable="HIBP";estimate_num = input(estimate, best12.);call symput("b1_hibp",estimate_num);run;
-	data _null_;set &dataset.;where variable="CHD";estimate_num = input(estimate, best12.);call symput("b1_chd",estimate_num);run;
-	data _null_;set &dataset.;where variable="STRK";estimate_num = input(estimate, best12.);call symput("b1_strk",estimate_num);run;
-	data _null_;set &dataset.;where variable="EMPH";estimate_num = input(estimate, best12.);call symput("b1_emph",estimate_num);run;
-	data _null_;set &dataset.;where variable="CHBRON";estimate_num = input(estimate, best12.);call symput("b1_chbron",estimate_num);run;
-	data _null_;set &dataset.;where variable="CHOL";estimate_num = input(estimate, best12.);call symput("b1_chol",estimate_num);run;
-	data _null_;set &dataset.;where variable="CANCER";estimate_num = input(estimate, best12.);call symput("b1_cancer",estimate_num);run;
-	data _null_;set &dataset.;where variable="DIAB";estimate_num = input(estimate, best12.);call symput("b1_diab",estimate_num);run;
-	data _null_;set &dataset.;where variable="JTPAIN";estimate_num = input(estimate, best12.);call symput("b1_jtpain",estimate_num);run;
-	data _null_;set &dataset.;where variable="ARTH";estimate_num = input(estimate, best12.);call symput("b1_arth",estimate_num);run;
-	data _null_;set &dataset.;where variable="ASTH";estimate_num = input(estimate, best12.);call symput("b1_asth",estimate_num);run;
-	data _null_;set &dataset.;where variable="MALE";estimate_num = input(estimate, best12.);call symput("b2",estimate_num);run;
-	data _null_;set &dataset.;where variable="RACE_HISPANIC";estimate_num = input(estimate, best12.);call symput("b3_hispanic",estimate_num);run;
-	data _null_;set &dataset.;where variable="RACE_BLACK";estimate_num = input(estimate, best12.);call symput("b3_black",estimate_num);run;
-	data _null_;set &dataset.;where variable="RACE_OTHER";estimate_num = input(estimate, best12.);call symput("b3_other",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_18_24";estimate_num = input(estimate, best12.);call symput("b4_18",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_25_34";estimate_num = input(estimate, best12.);call symput("b4_25",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_35_44";estimate_num = input(estimate, best12.);call symput("b4_35",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_45_54";estimate_num = input(estimate, best12.);call symput("b4_45",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_65_74";estimate_num = input(estimate, best12.);call symput("b4_65",estimate_num);run;
-	data _null_;set &dataset.;where variable="AGE_75_85";estimate_num = input(estimate, best12.);call symput("b4_75",estimate_num);run;
-	data _null_;set &dataset.;where variable="REGION_NORTHEAST";estimate_num = input(estimate, best12.);call symput("b5_northeast",estimate_num);run;				
-	data _null_;set &dataset.;where variable="REGION_MIDWEST";estimate_num = input(estimate, best12.);call symput("b5_midwest",estimate_num);run;
-	data _null_;set &dataset.;where variable="REGION_WEST";estimate_num = input(estimate, best12.);call symput("b5_west",estimate_num);run;	
-	
-	%put &=b0;
-	%put &=b1_hibp;
-	%put &=b1_chd;
-	%put &=b1_strk;
-	%put &=b1_emph;
-	%put &=b1_chbron;
-	%put &=b1_chol;
-	%put &=b1_cancer;
-	%put &=b1_diab;
-	%put &=b1_jtpain;
-	%put &=b1_arth;
-	%put &=b1_asth;
-	%put &=b2;
-	%put &=b3_hispanic;
-	%put &=b3_black;
-	%put &=b3_other;
-	%put &=b4_18;
-	%put &=b4_25;
-	%put &=b4_35;
-	%put &=b4_45;
-	%put &=b4_65;
-	%put &=b4_75;
-	%put &=b5_northeast;
-	%put &=b5_midwest;
-	%put &=b5_west;
-%mend;
-
-************************************************************;
-************************************************************;
-
-* Macro to save glm coefficients into macro variables;
+* Set up estimate extract macro function;
 %let b0=b0;
 %let b1_hibp=b1_hibp;
 %let b1_chd=b1_chd;
@@ -217,117 +133,31 @@ run;
 %let d5_midwest=d5_midwest;
 %let d5_west=d5_west;
 
-%macro proc_nlmixed(dataset);
-	data _null_;set &dataset.;where Parameter="b0";estimate_num = input(estimate, best12.);call symput("b0",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_hibp";estimate_num = input(estimate, best12.);call symput("b1_hibp",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_chd";estimate_num = input(estimate, best12.);call symput("b1_chd",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_strk";estimate_num = input(estimate, best12.);call symput("b1_strk",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_emph";estimate_num = input(estimate, best12.);call symput("b1_emph",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_chbron";estimate_num = input(estimate, best12.);call symput("b1_chbron",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_chol";estimate_num = input(estimate, best12.);call symput("b1_chol",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_cancer";estimate_num = input(estimate, best12.);call symput("b1_cancer",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_diab";estimate_num = input(estimate, best12.);call symput("b1_diab",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_jtpain";estimate_num = input(estimate, best12.);call symput("b1_jtpain",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_arth";estimate_num = input(estimate, best12.);call symput("b1_arth",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b1_asth";estimate_num = input(estimate, best12.);call symput("b1_asth",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b2";estimate_num = input(estimate, best12.);call symput("b2",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b3_hispanic";estimate_num = input(estimate, best12.);call symput("b3_hispanic",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b3_black";estimate_num = input(estimate, best12.);call symput("b3_black",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b3_other";estimate_num = input(estimate, best12.);call symput("b3_other",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_18";estimate_num = input(estimate, best12.);call symput("b4_18",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_25";estimate_num = input(estimate, best12.);call symput("b4_25",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_35";estimate_num = input(estimate, best12.);call symput("b4_35",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_45";estimate_num = input(estimate, best12.);call symput("b4_45",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_65";estimate_num = input(estimate, best12.);call symput("b4_65",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b4_75";estimate_num = input(estimate, best12.);call symput("b4_75",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b5_northeast";estimate_num = input(estimate, best12.);call symput("b5_northeast",estimate_num);run;				
-	data _null_;set &dataset.;where Parameter="b5_midwest";estimate_num = input(estimate, best12.);call symput("b5_midwest",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="b5_west";estimate_num = input(estimate, best12.);call symput("b5_west",estimate_num);run;	
-	
-	data _null_;set &dataset.;where Parameter="d0";estimate_num = input(estimate, best12.);call symput("d0",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_hibp";estimate_num = input(estimate, best12.);call symput("d1_hibp",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_chd";estimate_num = input(estimate, best12.);call symput("d1_chd",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_strk";estimate_num = input(estimate, best12.);call symput("d1_strk",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_emph";estimate_num = input(estimate, best12.);call symput("d1_emph",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_chbron";estimate_num = input(estimate, best12.);call symput("d1_chbron",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_chol";estimate_num = input(estimate, best12.);call symput("d1_chol",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_cancer";estimate_num = input(estimate, best12.);call symput("d1_cancer",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_diab";estimate_num = input(estimate, best12.);call symput("d1_diab",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_jtpain";estimate_num = input(estimate, best12.);call symput("d1_jtpain",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_arth";estimate_num = input(estimate, best12.);call symput("d1_arth",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d1_asth";estimate_num = input(estimate, best12.);call symput("d1_asth",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d2";estimate_num = input(estimate, best12.);call symput("d2",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d3_hispanic";estimate_num = input(estimate, best12.);call symput("d3_hispanic",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d3_black";estimate_num = input(estimate, best12.);call symput("d3_black",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d3_other";estimate_num = input(estimate, best12.);call symput("d3_other",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_18";estimate_num = input(estimate, best12.);call symput("d4_18",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_25";estimate_num = input(estimate, best12.);call symput("d4_25",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_35";estimate_num = input(estimate, best12.);call symput("d4_35",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_45";estimate_num = input(estimate, best12.);call symput("d4_45",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_65";estimate_num = input(estimate, best12.);call symput("d4_65",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d4_75";estimate_num = input(estimate, best12.);call symput("d4_75",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d5_northeast";estimate_num = input(estimate, best12.);call symput("d5_northeast",estimate_num);run;				
-	data _null_;set &dataset.;where Parameter="d5_midwest";estimate_num = input(estimate, best12.);call symput("d5_midwest",estimate_num);run;
-	data _null_;set &dataset.;where Parameter="d5_west";estimate_num = input(estimate, best12.);call symput("d5_west",estimate_num);run;	
-
-	%put &=b0;
-	%put &=b1_hibp;
-	%put &=b1_chd;
-	%put &=b1_strk;
-	%put &=b1_emph;
-	%put &=b1_chbron;
-	%put &=b1_chol;
-	%put &=b1_cancer;
-	%put &=b1_diab;
-	%put &=b1_jtpain;
-	%put &=b1_arth;
-	%put &=b1_asth;
-	%put &=b2;
-	%put &=b3_hispanic;
-	%put &=b3_black;
-	%put &=b3_other;
-	%put &=b4_18;
-	%put &=b4_25;
-	%put &=b4_35;
-	%put &=b4_45;
-	%put &=b4_65;
-	%put &=b4_75;
-	%put &=b5_northeast;
-	%put &=b5_midwest;
-	%put &=b5_west;
-	
-	%put &=d0;
-	%put &=d1_hibp;
-	%put &=d1_chd;
-	%put &=d1_strk;
-	%put &=d1_emph;
-	%put &=d1_chbron;
-	%put &=d1_chol;
-	%put &=d1_cancer;
-	%put &=d1_diab;
-	%put &=d1_jtpain;
-	%put &=d1_arth;
-	%put &=d1_asth;
-	%put &=d2;
-	%put &=d3_hispanic;
-	%put &=d3_black;
-	%put &=d3_other;
-	%put &=d4_18;
-	%put &=d4_25;
-	%put &=d4_35;
-	%put &=d4_45;
-	%put &=d4_65;
-	%put &=d4_75;
-	%put &=d5_northeast;
-	%put &=d5_midwest;
-	%put &=d5_west;
-%mend;
+* Save the estimate in a macro variable;
+%MACRO parameter (dataset,name);
+    data  _null_;
+        set &dataset.;
+        if parameter="&name";
+        call symput("&name", estimate);  
+    run;
+%MEND;
 
 ************************************************************;
 ************************************************************;
 
 *1. Part I from a 4-Part Model;
-*1.A. Part I: Logistic regression model to predict U (22613 obs);
+*1.A. Create a subset of covariate in Part I;
+data covariate;
+	set &data.;
+	keep HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
+				MALE RACE_HISPANIC RACE_BLACK RACE_OTHER
+				AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85
+				REGION_NORTHEAST REGION_MIDWEST REGION_WEST U V dupersid TOTEXP17;
+run;
+
+************************************************************;
+
+*1.B. Run Part I: Logistic regression model to predict U (22613 obs);
 title "Log-normal distribution on cost data (Part I from a 4-Part Model)";
 proc logistic data=&data descending;
 	model U = HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
@@ -335,80 +165,37 @@ proc logistic data=&data descending;
 				AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85
 				REGION_NORTHEAST REGION_MIDWEST REGION_WEST ;
 	ods output ParameterEstimates=result_logistic_u;
+	score data=covariate out=part1(rename=(p_1=prob_u));
 run;
 
 ************************************************************;
 
-*1.B. Upload parameters into macro variables using the dataset macro;
-%proc_logistic(result_logistic_u);
-
-************************************************************;
-
-*1.C. Calculate probability for U using logistic regression coefficients;
-data part1;
-    set &data;
-    teta_u = &b0 + &b1_hibp * HIBP + &b1_chd * CHD + &b1_strk * STRK +
-             &b1_emph * EMPH + &b1_chbron * CHBRON + &b1_chol * CHOL +
-             &b1_cancer * CANCER + &b1_diab * DIAB + &b1_jtpain * JTPAIN +
-             &b1_arth * ARTH + &b1_asth * ASTH + &b2 * MALE +
-             &b3_hispanic * RACE_HISPANIC + &b3_black * RACE_BLACK +
-             &b3_other * RACE_OTHER + &b4_18 * AGE_18_24 + &b4_25 * AGE_25_34 +
-             &b4_35 * AGE_35_44 + &b4_45 * AGE_45_54 + &b4_65 * AGE_65_74 +
-             &b4_75 * AGE_75_85 + &b5_northeast * REGION_NORTHEAST +
-             &b5_midwest * REGION_MIDWEST + &b5_west * REGION_WEST;
-    prob_u = 1 / (1 + exp(-teta_u)); * Probability of U;
-run;
-
-************************************************************;
-
-*1.D. Display summary statistics of the calculated probability (prob_u);
+*1.C. Display summary statistics of the calculated probability (prob_u);
 proc means data=part1;
     var prob_u;
 run; 
 
 /* Log-Normal Model (part I from a 4-Part Model): 
    Mean probability: 0.8214288 */
-
+  
 ************************************************************;
 ************************************************************;
 
 *2. Part II from a 4-Part Model;
-*2.A. Part II: Logistic regression model to predict V conditional on U=1;
+*2.A. Run Part II: Logistic regression model to predict V conditional on U=1;
 title "Log-normal distribution on cost data (part II from a 4-Part Model)";
 proc logistic data=&data descending;
 	model V =  HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
 				MALE RACE_HISPANIC RACE_BLACK RACE_OTHER
 				AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85
 				REGION_NORTHEAST REGION_MIDWEST REGION_WEST ;
-	ods output ParameterEstimates=result_logistic_v;
 	where U=1; * Only consider observations where U=1;
+	score data=covariate out=part2(rename=(p_1=prob_v));
 run;
 
 ************************************************************;
 
-*2.B. Upload parameters into macro variables;
-%proc_logistic(result_logistic_v);
-
-************************************************************;
-
-*2.C. Calculate probability for V using logistic regression coefficients;
-data part2;
-    set &data;
-    teta_v = &b0 + &b1_hibp * HIBP + &b1_chd * CHD + &b1_strk * STRK +
-             &b1_emph * EMPH + &b1_chbron * CHBRON + &b1_chol * CHOL +
-             &b1_cancer * CANCER + &b1_diab * DIAB + &b1_jtpain * JTPAIN +
-             &b1_arth * ARTH + &b1_asth * ASTH + &b2 * MALE +
-             &b3_hispanic * RACE_HISPANIC + &b3_black * RACE_BLACK +
-             &b3_other * RACE_OTHER + &b4_18 * AGE_18_24 + &b4_25 * AGE_25_34 +
-             &b4_35 * AGE_35_44 + &b4_45 * AGE_45_54 + &b4_65 * AGE_65_74 +
-             &b4_75 * AGE_75_85 + &b5_northeast * REGION_NORTHEAST +
-             &b5_midwest * REGION_MIDWEST + &b5_west * REGION_WEST;
-    prob_v = 1 / (1 + exp(-teta_v)); * Probability of V;
-run;
-
-************************************************************;
-
-*2.D. Display summary statistics of the calculated probability (prob_v);
+*2.C. Display summary statistics of the calculated probability (prob_v);
 proc means data=part2;
     var prob_v;
     where U = 1;
@@ -419,7 +206,7 @@ run;
 
 ************************************************************; 
 ************************************************************;
- 
+
 *3. Part III from a 4-Part Model(16768 obs);
 *3.A. Part III: Generalized linear model to predict outpatient conditional on U=1 and V=0;
 title "Log-normal distribution on cost data (part III from a 4-Part Model)";
@@ -469,19 +256,69 @@ proc nlmixed data=&data;
 	model TOTEXP17~general(loglik); 
 	
 	*Output parameters;
-	ods output ParameterEstimates=lognormal_est_part3;
+	ods output ParameterEstimates=est_all;
 run;
 
 ************************************************************;
 
 *3.B. Upload parameters into macro variables;
-%proc_nlmixed(lognormal_est_part3);
+	%parameter(est_all,b0);
+	%parameter(est_all,b1_hibp);
+	%parameter(est_all,b1_chd);
+	%parameter(est_all,b1_strk);
+	%parameter(est_all,b1_emph);
+	%parameter(est_all,b1_chbron);
+	%parameter(est_all,b1_chol);
+	%parameter(est_all,b1_cancer);
+	%parameter(est_all,b1_diab);
+	%parameter(est_all,b1_jtpain);
+	%parameter(est_all,b1_arth);
+	%parameter(est_all,b1_asth);
+	%parameter(est_all,b2);
+	%parameter(est_all,b3_hispanic);
+	%parameter(est_all,b3_black);
+	%parameter(est_all,b3_other);
+	%parameter(est_all,b4_18);
+	%parameter(est_all,b4_25);
+	%parameter(est_all,b4_35);
+	%parameter(est_all,b4_45);
+	%parameter(est_all,b4_65);
+	%parameter(est_all,b4_75);
+	%parameter(est_all,b5_northeast);
+	%parameter(est_all,b5_midwest);
+	%parameter(est_all,b5_west);
 
+	%parameter(est_all,d0);
+	%parameter(est_all,d1_hibp);
+	%parameter(est_all,d1_chd);
+	%parameter(est_all,d1_strk);
+	%parameter(est_all,d1_emph);
+	%parameter(est_all,d1_chbron);
+	%parameter(est_all,d1_chol);
+	%parameter(est_all,d1_cancer);
+	%parameter(est_all,d1_diab);
+	%parameter(est_all,d1_jtpain);
+	%parameter(est_all,d1_arth);
+	%parameter(est_all,d1_asth);
+	%parameter(est_all,d2);
+	%parameter(est_all,d3_hispanic);
+	%parameter(est_all,d3_black);
+	%parameter(est_all,d3_other);
+	%parameter(est_all,d4_18);
+	%parameter(est_all,d4_25);
+	%parameter(est_all,d4_35);
+	%parameter(est_all,d4_45);
+	%parameter(est_all,d4_65);
+	%parameter(est_all,d4_75);
+	%parameter(est_all,d5_northeast);
+	%parameter(est_all,d5_midwest);
+	%parameter(est_all,d5_west);
+	
 ************************************************************;
 
 *3.C. Make predictions;
 data part3;
-	set &data;
+	set covariate;
 	
 	mu_outpatient = &b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
   		   &b1_emph*EMPH + &b1_chbron*CHBRON + &b1_chol*CHOL + &b1_cancer*CANCER + 
@@ -563,27 +400,77 @@ proc nlmixed data=&data;
 		  		   d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST)/2);
   	  	
 	z = (LOG(TOTEXP17) - mu) / sigma;
-    	pdf_normal = pdf('normal', z);
-    	loglik=log((pdf_normal/(sigma*TOTEXP17)));
-    	*E_y=exp(mu + sigma**2/2);
+    pdf_normal = pdf('normal', z);
+    loglik=log((pdf_normal/(sigma*TOTEXP17)));
+
     	
-    	*Fit the model above;
+	*Fit the model above;
 	model TOTEXP17~general(loglik); 
 	
 	*Output parameters;
-	ods output ParameterEstimates=lognormal_est_part4;
+	ods output ParameterEstimates=est_all;
 run; 
 
 ************************************************************;
 
 *4.B. Upload parameters into macro variables;
-%proc_nlmixed(lognormal_est_part4);
+	%parameter(est_all,b0);
+	%parameter(est_all,b1_hibp);
+	%parameter(est_all,b1_chd);
+	%parameter(est_all,b1_strk);
+	%parameter(est_all,b1_emph);
+	%parameter(est_all,b1_chbron);
+	%parameter(est_all,b1_chol);
+	%parameter(est_all,b1_cancer);
+	%parameter(est_all,b1_diab);
+	%parameter(est_all,b1_jtpain);
+	%parameter(est_all,b1_arth);
+	%parameter(est_all,b1_asth);
+	%parameter(est_all,b2);
+	%parameter(est_all,b3_hispanic);
+	%parameter(est_all,b3_black);
+	%parameter(est_all,b3_other);
+	%parameter(est_all,b4_18);
+	%parameter(est_all,b4_25);
+	%parameter(est_all,b4_35);
+	%parameter(est_all,b4_45);
+	%parameter(est_all,b4_65);
+	%parameter(est_all,b4_75);
+	%parameter(est_all,b5_northeast);
+	%parameter(est_all,b5_midwest);
+	%parameter(est_all,b5_west);
+
+	%parameter(est_all,d0);
+	%parameter(est_all,d1_hibp);
+	%parameter(est_all,d1_chd);
+	%parameter(est_all,d1_strk);
+	%parameter(est_all,d1_emph);
+	%parameter(est_all,d1_chbron);
+	%parameter(est_all,d1_chol);
+	%parameter(est_all,d1_cancer);
+	%parameter(est_all,d1_diab);
+	%parameter(est_all,d1_jtpain);
+	%parameter(est_all,d1_arth);
+	%parameter(est_all,d1_asth);
+	%parameter(est_all,d2);
+	%parameter(est_all,d3_hispanic);
+	%parameter(est_all,d3_black);
+	%parameter(est_all,d3_other);
+	%parameter(est_all,d4_18);
+	%parameter(est_all,d4_25);
+	%parameter(est_all,d4_35);
+	%parameter(est_all,d4_45);
+	%parameter(est_all,d4_65);
+	%parameter(est_all,d4_75);
+	%parameter(est_all,d5_northeast);
+	%parameter(est_all,d5_midwest);
+	%parameter(est_all,d5_west);
 
 ************************************************************;
 
 *4.C. Make predictions;
 data part4;
-	set &data;
+	set covariate;
 	
 	mu_inpatient = &b0+&b1_hibp*HIBP+&b1_chd*CHD+&b1_strk*STRK + 
   		   &b1_emph*EMPH + &b1_chbron*CHBRON + &b1_chol*CHOL + &b1_cancer*CANCER + 
@@ -631,8 +518,7 @@ proc sort data=part3;by dupersid;run;
 proc sort data=part4;by dupersid;run;
 
 data fourpart;
-	merge &data
-		  part1(keep=dupersid prob_u) 
+	merge part1(keep=dupersid prob_u TOTEXP17) 
 		  part2(keep=dupersid prob_v)  
 		  part3(keep=dupersid pred_outpatient)  
 		  part4(keep=dupersid pred_inpatient);
@@ -654,6 +540,3 @@ run;
 /* Log-Normal Model (4-Part Model) results: 
    Mean residual: -466.21773
    Mean absolute residual: 6577.02643	*/
-
-
-
