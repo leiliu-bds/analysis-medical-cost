@@ -30,3 +30,9 @@
     - File: [chapter3_m2pm_log-normal.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_m2pm_log-normal.sas) 
     - Discription: Implements the Marginalized Two-Part Model (M2PM) with part two modeled using the log-normal distribution. The script includes the calculation of residuals, cross-validated residuals, incremental effect, and partial elasticity.
 
+## Additional Notes
+- For Log-Normal, Generalized Gamma, Log-Skew-Normal distributions and Marginalized 2PM, all the corresponding codes can be found and executed using SAS.
+- For Box-Cox Transformation, scripts are available for both SAS and R:
+  - Use SAS for residuals, CV residuals, and bootstrap.
+  - Use R for calculating the incremental effect and partial elasticity.
+- Note: For the R scripts, users will need to create and export the "bootstrap_parameter.csv" files by first running the [chapter3_2pm_box-cox.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_2pm_box-cox.sas) script to prepare the data.
