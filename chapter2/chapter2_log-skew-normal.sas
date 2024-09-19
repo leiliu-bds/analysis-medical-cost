@@ -488,18 +488,15 @@ run;
     
 ************************************************************;
 
-*3.E. Calculate residuals for Cross-validation (5-fold validation);    
+*3.D. Calculate residuals for Cross-validation (5-fold validation);    
 * Combine predictions from all folds;
-data cv_pred;
-    merge pred_1 pred_2 pred_3 pred_4 pred_5;
-    by dupersid;
-run;
-
-* Calculate residuals and absolute residuals;
 data cv_residual;
-    set cv_pred;
-    resid = TOTEXP17 - pred;
-    absresid = abs(TOTEXP17 - pred);
+	merge pred_1 pred_2 pred_3 pred_4 pred_5;
+	by dupersid;
+
+	* Calculate residuals and absolute residuals;
+	resid=TOTEXP17-meanpred;
+	absresid=abs(TOTEXP17-meanpred);
 run;
 
 * Summary statistics of residuals and absolute residuals;
