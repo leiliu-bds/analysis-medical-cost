@@ -11,7 +11,7 @@ library(janitor)
 
 #1.A. Input data
 # This file can be created and downloaded by using the SAS code "chapter3_box-cox.sas"
-  box_parameter=read.csv("/Users/lexy/Library/CloudStorage/Box-Box/MEPS/Chapter3_2PM/bootstrap_parameter.csv",
+  box_parameter=read.csv("/.../bootstrap_parameter.csv",
                          header=T)[-1,]
   
   alpha = box_parameter[,colnames(box_parameter)[startsWith(colnames(box_parameter),"a")]]
