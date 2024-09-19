@@ -601,7 +601,7 @@ run;
     
 ************************************************************;
 
-*3.E. Calculate residuals for Cross-validation (5-fold validation);    
+*3.D. Calculate residuals for Cross-validation (5-fold validation);    
 * Combine predictions from all folds;
 data cv_residual;
     merge pred_1 pred_2 pred_3 pred_4 pred_5;
