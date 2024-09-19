@@ -246,9 +246,9 @@ proc nlmixed data=&data;
 	model TOTEXP17~general(loglik);
 
 	*Output parameters;
-	ods output ParameterEstimates=box_est;
   	predict mean out=box_mean;
-     	predict var out=box_var;
+    	predict var out=box_var;
+    	predict gamma out=box_gamma;
  	predict p out=box_p;
 run;
 
@@ -256,32 +256,26 @@ run;
 ************************************************************;
 
 *2. Calculate residuals;
-data box_pred;
+data box_residual;
 	merge box_mean(rename=(pred=mean))
  		box_var(rename=(pred=var))
+		box_gamma(rename=(pred=gamma))
  		box_p(rename=(pred=p));
 	by dupersid;
-run;
 
-* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
-data box_transformation;
-	set box_pred;
+	* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
 	array normalvalue [1000] nv1-nv1000;
 	array predvalue[1000] pred1-pred1000;
 
+	* Initialize the random number seed;
+	call streaminit(12345);  
 	do i=1 to 1000;
 		NormalValue[i] = rand("Normal", mean, sqrt(var));
-		predvalue[i] = normalvalue[i]**(1/&gamma);
+		predvalue[i] = normalvalue[i]**(1/gamma);
 	end;	
  
 	meanpred = p* mean(of predvalue[*]);
-run;
 
-************************************************************;
-
-*2.C. Calculate residuals;	
-data box_residual;
-	set box_transformation;
 	resid=totexp17-meanpred;				
 	abs = abs(resid);					
 run;
@@ -290,11 +284,11 @@ proc univariate data=box_residual;
 	var resid abs;
 run;
 
-/* Note: the residuals may vary due to random numbers*/
+/* Note: Residuals may vary with different runs if the random number seed is altered. */
 /* Box-Cox Transformations Model results: 
-   Mean residual: -163.72731				
-   Mean absolute residual: 5482.31466*/
-  
+   Mean residual: -169.1				
+   Mean absolute residual: 5489.7*/
+   
 ************************************************************;
 ************************************************************;
 
@@ -366,7 +360,7 @@ run;
 		*Define initial values;
 	  	parms a0=2.1073 a1_hibp=0.9031 a1_chd=0.7072 a1_strk=0.2085 
 	  		  a1_emph=-0.1208 a1_chbron=1.1689 a1_chol=0.8573 a1_cancer=1.0304 
-	  	      a1_diab=1.4906 a1_jtpain=0.5904 a1_arth=0.6471 a1_asth=0.7268
+	  	      	  a1_diab=1.4906 a1_jtpain=0.5904 a1_arth=0.6471 a1_asth=0.7268
 	  		  a2=-1.0777 a3_hispanic=-1.2316 a3_black=-0.8807 a3_other=-0.6731	
 	  		  a4_18=-0.3408 a4_25=-0.3204 a4_35=-0.2818	
 	  		  a4_45=-0.1783	a4_65=0.7202 a4_75=0.7106
@@ -523,7 +517,7 @@ run;
 	%parameter(est_all,gamma);
 	
     * Make predictions using the fitted model;
-   	 data test_&fold.;
+   data pred_&fold.;
        	set test;
        	
 	 	teta = &a0 + &a1_hibp*HIBP + &a1_chd*CHD + &a1_strk*STRK + 
@@ -557,25 +551,24 @@ run;
 
 		mean = &gamma * mu +1;
 		var = &gamma**2 * sigma**2;
-		
-		keep dupersid mean var p TOTEXP17;
-	run;
 
-	data pred_&fold.;
-		set test_&fold.;
+		* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
 		array normalvalue [1000] nv1-nv1000;
 		array predvalue[1000] pred1-pred1000;
-		call streaminit(123);
-		
-		* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
+
+
+		* Initialize the random number seed;
+		call streaminit(12345);  
 		do i=1 to 1000;
 			NormalValue[i] = rand("Normal", mean, sqrt(var));
 			predvalue[i] = normalvalue[i]**(1/&gamma);
 		end;
 		
 		meanpred = p*mean(of predvalue[*]);
+
 	run;
-%MEND;
+ 
+ %MEND;
 
 %boxcox_model(fold=1);
 %boxcox_model(fold=2);
@@ -588,43 +581,31 @@ run;
 
 *3.E. Calculate residuals for Cross-validation (5-fold validation);    
 * Combine predictions from all folds;
-data cv_pred;
+data cv_residual;
     merge pred_1 pred_2 pred_3 pred_4 pred_5;
     by dupersid;
-run;
-
-* Calculate residuals and absolute residuals;
-data cv_residual;
-	set cv_pred;
-	resid=TOTEXP17-meanpred;
-	absresid=abs(TOTEXP17-meanpred);
+    
+    * Calculate residuals and absolute residuals;
+    resid=TOTEXP17-meanpred;
+    absresid=abs(TOTEXP17-meanpred);
 run;
 
 * Summary statistics of residuals and absolute residuals;
 proc univariate data=cv_residual;
     var resid absresid;
 run;
- 
-/* Note: the residuals may vary due to random numbers*/
+
+/* Note: Residuals may vary with different runs if the random number seed is altered. */
 /* Box-Cox Model results: 
-   Mean cross-validation residual: -175.1949	
-   Mean cross-validation absolute residual: 5503.10764 */
+   Mean cross-validation residual: -172.8	
+   Mean cross-validation absolute residual: 5500.2 */
 
 ************************************************************;
 ************************************************************;
 
 *4. Bootstrap dataset for calculating the standard error for incremental effect and partial elasticity;
-*4.A. Setting up Bootstrap Parameters;
-%let n_bootstrap = 100;
 
-************************************************************;
-
-*4.B. Creating Empty Datasets for Storing Bootstrap Results;
-data bootstrap_stats;
-    length bootstrap_mean bootstrap_std 8;
-    iteration = .;
-run;
-
+*4.A. Creating Empty Datasets for Storing Bootstrap Results;
 data bootstrap_parameter;
     length a0 a1_hibp a1_chd a1_strk a1_emph a1_chbron a1_chol a1_cancer 
 		  a1_diab a1_jtpain a1_arth a1_asth a2 a3_hispanic a3_black a3_other
@@ -640,50 +621,61 @@ data bootstrap_parameter;
     *iteration = .;
 run;
 
+/*Note: this step is used to check the basic statistics for bootstrap data*/
+/*data bootstrap_stats;
+    length bootstrap_mean bootstrap_std 8;
+    iteration = .;
+run;*/
+
 ************************************************************;
 
-*4.C. Bootstrap loop;
+*4.B. Bootstrap loop;
+*Setting up Bootstrap Parameters;
+%let n_bootstrap = 100;
+%let seed = 12345;
+
 %macro bootstrap;
-    %do i = 1 %to &n_bootstrap;
-    
-	*Resampling Data Using proc surveyselect;
-	    proc surveyselect data=&data  
-			  out=outboot noprint
-			  method=urs
-			  samprate=1
-			  outhits
-			  rep=1; 
+	%do i = 1 %to &n_bootstrap;
+		* Resampling Data Using proc surveyselect with a specific seed for each iteration;
+		proc surveyselect data=&data
+			out=outboot
+			noprint
+			method=urs
+			samprate=1
+			outhits
+			rep=1
+			seed=%eval(&seed. + &i);  * Incrementing the seed with the loop index to ensure unique but reproducible results;
 		run;
 	   
-	    **************************************************;
+        	**************************************************;
 	    
-	    /*Note: this step is used to check the basic statistics for bootstrap data*/
-	    /*
-	    *Storing Bootstrap Mean and Standard Deviation;
-	        proc means data=outboot mean STD noprint;
-	            var TOTEXP17;
-	            output out=bootstrap_stats_temp_&i 
-	            		mean=bootstrap_mean 
-	            		std=bootstrap_std;
-	        run;  
-	
-	    *Appending the statistic to the bootstrap_stats dataset;
-	    data bootstrap_stats_temp_&i ;
-	        set bootstrap_stats_temp_&i ;
-	        iteration = &i;
-	        output;
-	    run;
-	
-	    * Appending the bootstrap_stats_temp dataset to bootstrap_stats;
-	    proc append base=bootstrap_stats 
-	    			data=bootstrap_stats_temp_&i force;
-	    run;
-	    */
+		/*Note: this step is used to check the basic statistics for bootstrap data*/
+		/*
+		*Storing Bootstrap Mean and Standard Deviation;
+		proc means data=outboot mean STD noprint;
+		    var TOTEXP17;
+		    output out=bootstrap_stats_temp_&i 
+				mean=bootstrap_mean 
+				std=bootstrap_std;
+		run;  
+		
+		*Appending the statistic to the bootstrap_stats dataset;
+		data bootstrap_stats_temp_&i ;
+		set bootstrap_stats_temp_&i ;
+		iteration = &i;
+		output;
+		run;
+		
+		* Appending the bootstrap_stats_temp dataset to bootstrap_stats;
+		proc append base=bootstrap_stats 
+				data=bootstrap_stats_temp_&i force;
+		run;
+		*/
 	   
-	    **************************************************;
+	    	**************************************************;
 	    
-		*Fitting the Box-Cox Distribution Model;
-	    proc nlmixed data=outboot NOSORTSUB maxiter=50000;
+	   	*Fitting the Box-Cox Distribution Model;
+	    	proc nlmixed data=outboot;
 	
 			*Define initial values;
 		  	parms a0=2.1073 a1_hibp=0.9031 a1_chd=0.7072 a1_strk=0.2085 
@@ -761,7 +753,7 @@ run;
 			ods output ParameterEstimates=box_est;
 		run;
 	
-	    **************************************************;
+	    	**************************************************;
 		
 		*Storing Parameter Estimates;
 		proc transpose data=box_est(keep=parameter estimate) 
@@ -772,9 +764,9 @@ run;
 		
 		proc append base=bootstrap_parameter
 	    			data=box_est_&i force;
-	    run;
+		run;
 
-    %end;
+	%end;
     
 %mend;
 
@@ -792,7 +784,6 @@ proc export data=bootstrap_parameter
 	     outfile="/.../bootstrap_parameter.csv"
 	     dbms=csv replace;
 run;
-
 
 /*Note: this step is used to check the basic statistics for bootstrap data*/
 /*proc export data=bootstrap_stats
