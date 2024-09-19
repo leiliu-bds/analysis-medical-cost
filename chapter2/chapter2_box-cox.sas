@@ -555,25 +555,25 @@ run;*/
         proc nlmixed data=outboot;
 
 		*Define initial values;
-	  	parms b0=9.6103 b1_hibp=0.2690 b1_chd=0.4872 b1_strk=0.3450
-	  	      b1_emph=0.1746 b1_chbron=0.2166 b1_chol=0.3831 b1_cancer=0.6097
-		      b1_diab=1.0021 b1_jtpain=0.4690 b1_arth=0.5264 b1_asth=0.5768
-		      b2=-0.4256 b3_hispanic=-0.8220 b3_black=-0.5817 b3_other=-0.4422	
-	  	      b4_18=-0.9116 b4_25=-0.6504 b4_35=-0.4475	
-	  	      b4_45=-0.3120 b4_65=0.1614 b4_75=0.2681	
-	  	      b5_northeast=0.4931 b5_midwest=0.1612 b5_west=0.1792
-	  	      b6=3.9966
-		  		  	
-	  	      d0=1.5251 d1_hibp=0.04841 d1_chd=0.007239 d1_strk=0.2521
-	  	      d1_emph=-0.02116 d1_chbron=0.06284 d1_chol=-0.1531 d1_cancer=0.1420
-	  	      d1_diab=0.08751 d1_jtpain=0.09788 d1_arth=-0.03765 d1_asth=-0.05170			
-	  	      d2=0.05159 d3_hispanic=0.2021 d3_black=0.1978 d3_other=0.04476				
-	  	      d4_18=-0.1136 d4_25=-0.01581 d4_35=0.03804
-	  	      d4_45=0.08853 d4_65=-0.2495 d4_75=-0.1693	
-	  	      d5_northeast=0.06382 d5_midwest=-0.02944 d5_west=-0.02921	
-	  	      d6=-0.3131		
-		  			
-	  	      gamma=0.07388;	
+	  	parms 	b0=0 b1_hibp=0 b1_chd=0 b1_strk=0
+	  			b1_emph=0 b1_chbron=0 b1_chol=0 b1_cancer=0
+	  			b1_diab=0 b1_jtpain=0 b1_arth=0 b1_asth=0
+	  		  	b2=0 b3_hispanic=0 b3_black=0 b3_other=0
+	  		  	b4_18=0 b4_25=0 b4_35=0
+	  		  	b4_45=0	b4_65=0 b4_75=0
+	  		  	b5_northeast=0 b5_midwest=0 b5_west=0
+	  		  	b6=0
+	  		  	
+	  		  	d0=1 d1_hibp=1 d1_chd=1 d1_strk=1
+	  			d1_emph=1 d1_chbron=12 d1_chol=1 d1_cancer=1
+	  			d1_diab=1 d1_jtpain=1 d1_arth=1 d1_asth=1
+	  		  	d2=1 d3_hispanic=1 d3_black=0 d3_other=0
+	  		  	d4_18=1 d4_25=1 d4_35=1	
+	  		  	d4_45=1	d4_65=1 d4_75=1
+	  		  	d5_northeast=1 d5_midwest=1 d5_west=1
+	  		  	d6=1
+	  			
+	  			gamma=1;	
 	
 	      *Location;
 	        mu =   b0 + b1_hibp*HIBP + b1_chd*CHD + b1_strk*STRK + 
