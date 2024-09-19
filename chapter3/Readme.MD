@@ -2,8 +2,8 @@
 
 ## Outlines and Locations for Codes:
 - Data Preparation:
-  - Data structure for subset and cross-validation for cost
-    - File: [chapter3_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter3/chapter3_data.sas)
+  - Data structure for cost
+    - File: [MEPS_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter1/MEPS data.sas)
     - Description: This script filters the dataset to include only observations with zero-inflated, nonnegative continuous cost data. It also prepares the data for 5-fold cross-validation, assigning each observation to one of the 5 folds.  
 
 - Modeling with different distributions:
