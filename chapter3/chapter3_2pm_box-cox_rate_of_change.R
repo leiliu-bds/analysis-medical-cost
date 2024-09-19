@@ -29,6 +29,12 @@ library(janitor)
   gamma=box_parameter[,colnames(box_parameter)[startsWith(colnames(box_parameter),"g")]]
   n=length(alpha.1)  
 
+  list=c("HIBP","CHD","STRK","EMPH","CHBRON","CHOL",
+         "CANCER","DIAB","JTPAIN","ARTH","ASTH",
+         "MALE","RACE_HISPANIC","RACE_BLACK","RACE_OTHER",
+         "AGE_18_24","AGE_25_34","AGE_35_44","AGE_45_54","AGE_65_74","AGE_75_85",
+         "REGION_NORTHEAST","REGION_MIDWEST","REGION_WEST","IPDIS")
+
   
 #1.B. Set up integral function
   int_box = function(v,alpha,beta,delta,gamma) 
