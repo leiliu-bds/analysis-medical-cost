@@ -8,10 +8,7 @@
 
 #1.A. Input data
   # This file can be created and downloaded by using the SAS code "chapter2_box-cox.sas"
-  box_parameter_part2=read.csv("/Users/lexy/Library/CloudStorage/Box-Box/MEPS/Chapter2_Part2/part2_bootstrap_parameter.csv",
-                               header=T)
-  
-  box_parameter_part2=read.csv("/Users/lexy/Library/CloudStorage/OneDrive-WashingtonUniversityinSt.Louis/Desktop/202409_MEPS/04_Code/03_Marginal Effect_R/03_incremental_Basu/B. Modified_Lexy/20240415_bootstrap/part2_bootstrap_parameter.csv",
+  box_parameter_part2=read.csv("/.../part2_bootstrap_parameter.csv",
                                header=T)
   
   beta = box_parameter_part2[,colnames(box_parameter_part2)[startsWith(colnames(box_parameter_part2),"b")]]
