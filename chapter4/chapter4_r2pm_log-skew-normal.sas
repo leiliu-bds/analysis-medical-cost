@@ -103,7 +103,7 @@ proc nlmixed data=&data NOSORTSUB;
   		  d5_northeast=0.03274 d5_midwest=-0.03171 d5_west=-0.04257	
   		  d6=-0.6160			
   			
-  		  var1=1.2 var2=0.2222 cov12=0.3;	
+  		  var1=1.2 var2=0.2222 cov12=0.3
   		  
   		  lambda=0; 
   		  
