@@ -162,13 +162,16 @@ proc nlmixed data=&data NOSORTSUB;
 		
 	*Output parameters;
 	predict p*E_y out=lognormal;
-	
-	*Marginal Effects;
+
+  	/* NOTE: The equations below exclude the random effects (i.e., assume random effects are set to 0). */  
+	/* NOTE: To calculate the incremental effect, please refer to "chapter4_r2pm_log-normal_rate_of_change.R". */	
+	/*
+ 	*Marginal Effects;
 	ESTIMATE 'marginal effect-HIBP' 		exp(a0 + a1_hibp)/(1+exp(a0 + a1_hibp))*exp(b0+b1_hibp+(exp((d0 + d1_hibp)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-CHD' 			exp(a0 + a1_chd)/(1+exp(a0 + a1_chd))*exp(b0+b1_chd+(exp((d0 + d1_chd)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-STRK' 		exp(a0 + a1_strk)/(1+exp(a0 + a1_strk))*exp(b0+b1_strk+(exp((d0 + d1_strk)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-EMPH' 		exp(a0 + a1_emph)/(1+exp(a0 + a1_emph))*exp(b0+b1_emph+(exp((d0 + d1_emph)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
-    ESTIMATE 'marginal effect-CHBRON' 		exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
+    	ESTIMATE 'marginal effect-CHBRON' 		exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-CHOL' 		exp(a0 + a1_chol)/(1+exp(a0 + a1_chol))*exp(b0+b1_chol+(exp((d0 + d1_chol)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-CANCER' 		exp(a0 + a1_cancer)/(1+exp(a0 + a1_cancer))*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-DIAB' 		exp(a0 + a1_diab)/(1+exp(a0 + a1_diab))*exp(b0+b1_diab+(exp((d0 + d1_diab)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
@@ -176,7 +179,7 @@ proc nlmixed data=&data NOSORTSUB;
 	ESTIMATE 'marginal effect-ARTH' 		exp(a0 + a1_arth)/(1+exp(a0 + a1_arth))*exp(b0+b1_arth+(exp((d0 + d1_arth)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-ASTH' 		exp(a0 + a1_asth)/(1+exp(a0 + a1_asth))*exp(b0+b1_asth+(exp((d0 + d1_asth)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-MALE' 		exp(a0 + a2)/(1+exp(a0 + a2))*exp(b0+b2+(exp((d0 + d2)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
-    ESTIMATE 'marginal effect-HISPANIC' 		exp(a0 + a3_hispanic)/(1+exp(a0 + a3_hispanic))*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
+    	ESTIMATE 'marginal effect-HISPANIC' 		exp(a0 + a3_hispanic)/(1+exp(a0 + a3_hispanic))*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-BLACK'		exp(a0 + a3_black)/(1+exp(a0 + a3_black))*exp(b0+b3_black+(exp((d0 + d3_black)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-OTHER'		exp(a0 + a3_other)/(1+exp(a0 + a3_other))*exp(b0+b3_other+(exp((d0 + d3_other)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
 	ESTIMATE 'marginal effect-AGE_18_24'		exp(a0 + a4_18)/(1+exp(a0 + a4_18))*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2)-exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2);
@@ -195,15 +198,15 @@ proc nlmixed data=&data NOSORTSUB;
 	ESTIMATE 'partial elasticity-CHD' 		log(exp(a0 + a1_chd)/(1+exp(a0 + a1_chd))*exp(b0+b1_chd+(exp((d0 + d1_chd)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-STRK' 		log(exp(a0 + a1_strk)/(1+exp(a0 + a1_strk))*exp(b0+b1_strk+(exp((d0 + d1_strk)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-EMPH' 		log(exp(a0 + a1_emph)/(1+exp(a0 + a1_emph))*exp(b0+b1_emph+(exp((d0 + d1_emph)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
-    ESTIMATE 'partial elasticity-CHBRON'	log(exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
+    	ESTIMATE 'partial elasticity-CHBRON'		log(exp(a0 + a1_chbron)/(1+exp(a0 + a1_chbron))*exp(b0+b1_chbron+(exp((d0 + d1_chbron)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-CHOL' 		log(exp(a0 + a1_chol)/(1+exp(a0 + a1_chol))*exp(b0+b1_chol+(exp((d0 + d1_chol)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
-	ESTIMATE 'partial elasticity-CANCER'	log(exp(a0 + a1_cancer)/(1+exp(a0 + a1_cancer))*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
+	ESTIMATE 'partial elasticity-CANCER'		log(exp(a0 + a1_cancer)/(1+exp(a0 + a1_cancer))*exp(b0+b1_cancer+(exp((d0 + d1_cancer)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-DIAB' 		log(exp(a0 + a1_diab)/(1+exp(a0 + a1_diab))*exp(b0+b1_diab+(exp((d0 + d1_diab)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
-	ESTIMATE 'partial elasticity-JTPAIN'	log(exp(a0 + a1_jtpain)/(1+exp(a0 + a1_jtpain))*exp(b0+b1_jtpain+(exp((d0 + d1_jtpain)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
+	ESTIMATE 'partial elasticity-JTPAIN'		log(exp(a0 + a1_jtpain)/(1+exp(a0 + a1_jtpain))*exp(b0+b1_jtpain+(exp((d0 + d1_jtpain)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-ARTH' 		log(exp(a0 + a1_arth)/(1+exp(a0 + a1_arth))*exp(b0+b1_arth+(exp((d0 + d1_arth)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-ASTH' 		log(exp(a0 + a1_asth)/(1+exp(a0 + a1_asth))*exp(b0+b1_asth+(exp((d0 + d1_asth)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-MALE' 		log(exp(a0 + a2)/(1+exp(a0 + a2))*exp(b0+b2+(exp((d0 + d2)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
-    ESTIMATE 'partial elasticity-HISPANIC' 	log(exp(a0 + a3_hispanic)/(1+exp(a0 + a3_hispanic))*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
+    	ESTIMATE 'partial elasticity-HISPANIC' 		log(exp(a0 + a3_hispanic)/(1+exp(a0 + a3_hispanic))*exp(b0+b3_hispanic+(exp((d0 + d3_hispanic)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-BLACK'		log(exp(a0 + a3_black)/(1+exp(a0 + a3_black))*exp(b0+b3_black+(exp((d0 + d3_black)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-OTHER'		log(exp(a0 + a3_other)/(1+exp(a0 + a3_other))*exp(b0+b3_other+(exp((d0 + d3_other)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-AGE_18_24'		log(exp(a0 + a4_18)/(1+exp(a0 + a4_18))*exp(b0+b4_18+(exp((d0 + d4_18)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
@@ -215,7 +218,8 @@ proc nlmixed data=&data NOSORTSUB;
 	ESTIMATE 'partial elasticity-NORTHEAST'		log(exp(a0 + a5_northeast)/(1+exp(a0 + a5_northeast))*exp(b0+b5_northeast+(exp((d0 + d5_northeast)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-MIDWEST' 		log(exp(a0 + a5_midwest)/(1+exp(a0 + a5_midwest))*exp(b0+b5_midwest+(exp((d0 + d5_midwest)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
 	ESTIMATE 'partial elasticity-WEST' 		log(exp(a0 + a5_west)/(1+exp(a0 + a5_west))*exp(b0+b5_west+(exp((d0 + d5_west)/2))**2/2))-log(exp(a0)/(1+exp(a0))*exp(b0+(exp(d0/2))**2/2));
-	ESTIMATE 'partial elasticity-IPDIS' 	log(exp(b0+b6+(exp((d0 + d6)/2))**2/2))-log(exp(b0+(exp(d0/2))**2/2));
+	ESTIMATE 'partial elasticity-IPDIS' 		log(exp(b0+b6+(exp((d0 + d6)/2))**2/2))-log(exp(b0+(exp(d0/2))**2/2));
+	*/
 run;
 
 ************************************************************;
