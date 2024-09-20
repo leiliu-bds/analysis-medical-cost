@@ -37,7 +37,8 @@ library(cubature)
   dim.r=2   
   Sigma_matrix=matrix(c(var.a,cov.ab, cov.ab,var.b), 2, 2) 
   n=length(alpha.1)
-  
+
+###############################################################################    
   
 #1.B. Method 1: Model setting using adaptIntegrate for 2 random effects
   #1.B.1. function for incremental effects for covariates with 2 random effects
