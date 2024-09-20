@@ -75,37 +75,37 @@ run;
 *1. Calculate incremental effect and partial elasticity;
 title "Log-skew-normal distribution on correlated cost data";
 proc nlmixed data=&data NOSORTSUB;
-
+	
 	*Define initial values;
-  	parms a0=2.1073 a1_hibp=0.9031 a1_chd=0.7072 a1_strk=0.2085 
-  		  a1_emph=-0.1208 a1_chbron=1.1689 a1_chol=0.8573 a1_cancer=1.0304 
-  	      a1_diab=1.4906 a1_jtpain=0.5904 a1_arth=0.6471 a1_asth=0.7268
-  		  a2=-1.0777 a3_hispanic=-1.2316 a3_black=-0.8807 a3_other=-0.6731	
-  		  a4_18=-0.3408 a4_25=-0.3204 a4_35=-0.2818	
-  		  a4_45=-0.1783	a4_65=0.7202 a4_75=0.7106
-  		  a5_northeast=0.4702 a5_midwest=0.4196 a5_west=0.3709
-  		  		  
-		  b0=7.2019 b1_hibp=0.1556 b1_chd=0.2343 b1_strk=0.1485
-  		  b1_emph=0.05903 b1_chbron=0.09168 b1_chol=0.2232 b1_cancer=0.3164
-  		  b1_diab=0.5224 b1_jtpain=0.2611 b1_arth=0.2849 b1_asth=0.3216
-  		  b2=-0.2375 b3_hispanic=-0.4750 b3_black=-0.3313 b3_other=-0.2434	
-  		  b4_18=-0.5456 b4_25=-0.3816 b4_35=-0.2601	
-  		  b4_45=-0.1810 b4_65=0.1078 b4_75=0.1471
-  		  b5_northeast=0.2777 b5_midwest=0.09627 b5_west=0.1033
-  		  b6=2.0906
-  		  	
-  		  d0=0.4802 d1_hibp=0.03428 d1_chd=-0.02044 d1_strk=0.2263
-  		  d1_emph=0.000761 d1_chbron=0.05155 d1_chol=-0.1924 d1_cancer=0.06504
-  		  d1_diab=0.01560 d1_jtpain=0.06287 d1_arth=-0.07606 d1_asth=-0.1148			
-  		  d2=0.08317 d3_hispanic=0.2616 d3_black=0.2670 d3_other=0.08447					
-  		  d4_18=-0.02268 d4_25=0.04705 d4_35=0.07917
-  		  d4_45=0.1056 d4_65=-0.2723 d4_75=-0.1957		
-  		  d5_northeast=0.03274 d5_midwest=-0.03171 d5_west=-0.04257	
-  		  d6=-0.6160			
-  			
-  		  var1=1.2 var2=0.2222 cov12=0.3
-  		  
-  		  lambda=0; 
+	parms a0=2.1106 a1_hibp=0.8931 a1_chd=0.6886 a1_strk=0.1892
+		a1_emph=-0.1390 a1_chbron=1.1547 a1_chol=0.8400 a1_cancer=0.9821
+		a1_diab=1.4380 a1_jtpain=0.5824 a1_arth=0.6103 a1_asth=0.7043
+		a2=-1.0686 a3_hispanic=-1.2170 a3_black=-0.8649 a3_other=-0.6470	
+		a4_18=-0.3326 a4_25=-0.3150 a4_35=-0.2742	
+		a4_45=-0.1721	a4_65=0.7017 a4_75=0.6802
+		a5_northeast=0.4746 a5_midwest=0.4158 a5_west=0.3660
+		  
+		b0=7.1741 b1_hibp=0.1668 b1_chd=0.2431 b1_strk=0.1497
+		b1_emph=0.05849 b1_chbron=0.09882 b1_chol=0.2298 b1_cancer=0.3215
+		b1_diab=0.5340 b1_jtpain=0.2680 b1_arth=0.2874 b1_asth=0.3302
+		b2=-0.2522 b3_hispanic=-0.4856 b3_black=-0.3383 b3_other=-0.2462	
+		b4_18=-0.5576 b4_25=-0.3959 b4_35=-0.2717		
+		b4_45=-0.1871 b4_65=0.1128 b4_75=0.1509
+		b5_northeast=0.2863 b5_midwest=0.1043 b5_west=0.1092
+		b6=2.0945
+		
+		d0=0.4661 d1_hibp=0.03263 d1_chd=-0.02785 d1_strk=0.2268
+		d1_emph=0.01445 d1_chbron=0.05223 d1_chol=-0.1900 d1_cancer=0.06751	
+		d1_diab=0.02041 d1_jtpain=0.06502 d1_arth=-0.07810 d1_asth=-0.1109			
+		d2=0.08788 d3_hispanic=0.2621 d3_black=0.2707 d3_other=0.08584						
+		d4_18=-0.00924 d4_25=0.05809 d4_35=0.08484		
+		d4_45=0.1134 d4_65=-0.2658 d4_75=-0.1908			
+		d5_northeast=0.03333 d5_midwest=-0.03260 d5_west=-0.03967		
+		d6=-0.6107				
+		
+		var1=1.2033 var2=0.2282 cov12=0.2386
+		
+		lambda=0;	
   		  
   	bounds var1 var2 cov12 >=0;
 	
