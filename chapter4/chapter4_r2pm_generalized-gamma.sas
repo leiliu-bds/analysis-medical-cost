@@ -75,7 +75,7 @@ proc sort data=&data;
 run;
 
 title "Generalized Gamma distribution on correlated cost data";
-proc nlmixed data=&data;
+proc nlmixed data=&data NOSORTSUB;
 
 	*Define initial values;
  	parms a0=2.1073 a1_hibp=0.9031 a1_chd=0.7072 a1_strk=0.2085 
