@@ -40,7 +40,7 @@ data &data;
 	if RACETHX=4 OR RACETHX=5 then RACE_OTHER=1; else RACE_OTHER=0; 
 
 	*Categorize region variable (reference group: REGION_SOUTH);
-    if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
+    	if REGION17=1 then REGION_NORTHEAST=1; else REGION_NORTHEAST=0;
 	if REGION17=2 then REGION_MIDWEST=1; else REGION_MIDWEST=0;
 	if REGION17=3 then REGION_SOUTH=1; else REGION_SOUTH=0; 							
 	if REGION17=4 then REGION_WEST=1; else REGION_WEST=0;
@@ -165,8 +165,8 @@ proc nlmixed data=&data NOSORTSUB;
 		
 	*Output parameters;
   	predict mean out=box_mean;
-    predict var out=box_var;
-    predict gamma out=box_gamma;
+    	predict var out=box_var;
+    	predict gamma out=box_gamma;
  	predict p out=box_p;
 run;
 
@@ -174,11 +174,17 @@ run;
 ************************************************************;
 
 *2. Calculate residuals;
+
+proc sort data=box_mean; by dupersid;run;
+proc sort data=box_var; by dupersid;run;
+proc sort data=box_gamma; by dupersid;run;
+proc sort data=box_p; by dupersid;run;
+
 data box_residual;
 	merge box_mean(rename=(pred=mean))
- 		  box_var(rename=(pred=var))
-		  box_gamma(rename=(pred=gamma))
- 		  box_p(rename=(pred=p));
+ 		  box_var(keep=dupersid pred rename=(pred=var))
+		  box_gamma(keep=dupersid pred rename=(pred=gamma))
+ 		  box_p(keep=dupersid pred rename=(pred=p));
 	by dupersid;
 
 	* Generate normal random number to approximate the expectation of \mu ^ (1/gamma);
@@ -204,5 +210,5 @@ run;
 
 /* Note: Residuals may vary with different runs if the random number seed is altered. */
 /* Random Effects Box-Cox Transformations Model results: 
-   Mean residual: 				
-   Mean absolute residual: */
+   Mean residual: 204.5				
+   Mean absolute residual: 4718.6*/
