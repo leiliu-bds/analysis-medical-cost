@@ -191,5 +191,5 @@ proc univariate data=zit_residual;
 run;
 
 /* Random Effects Zero-Inflated Model results: 
-   Mean residual: 204.5				
-   Mean absolute residual: 4718.6*/
+   Mean residual: 			
+   Mean absolute residual: */
