@@ -66,10 +66,15 @@ data &data;
 	FAMID=put(duid, z5.)||trim(FAMIDYR);
 run;
 
-****************************************;
-****************************************;
+*********************************************;
+*********************************************;
 
-proc nlmixed data=&data;
+*1. Calculate incremental effect and partial elasticity;
+proc sort data=&data;
+	by FAMID;
+run;
+
+proc nlmixed data=&data NOSORTSUB;
   /*parms a0=1.66 a1_hibp=0.79 a1_chd=0.60 a1_strk=0.20
         a1_emph=-0.19 a1_chbron=1.10 a1_chol=0.79 a1_cancer=0.97 
         a1_diab=1.27 a1_jtpain=0.53 a1_arth=0.59 a1_asth=0.63
@@ -115,7 +120,7 @@ proc nlmixed data=&data;
         b5_northeast=0.266691 b5_midwest=0.106443 b5_west=0.102890
         b6=0
         
-        simga=1		
+        sigma=1		
         
         var1=1.2 var2=0.2222 cov12=0.3;
 	
