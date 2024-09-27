@@ -70,7 +70,7 @@ run;
 ****************************************;
 
 proc nlmixed data=&data;
-  parms a0=1.66 a1_hibp=0.79 a1_chd=0.60 a1_strk=0.20
+  /*parms a0=1.66 a1_hibp=0.79 a1_chd=0.60 a1_strk=0.20
         a1_emph=-0.19 a1_chbron=1.10 a1_chol=0.79 a1_cancer=0.97 
         a1_diab=1.27 a1_jtpain=0.53 a1_arth=0.59 a1_asth=0.63
         a2=-0.89 a3_hispanic=-1.07 a3_black=-0.76 a3_other=-0.61
@@ -96,8 +96,29 @@ proc nlmixed data=&data;
         d5_northeast=0.03274 d5_midwest=-0.03171 d5_west=-0.04257	
         d6=-0.6160			
         
-        var1=1.2 var2=0.2222 cov12=0.3;	
+        var1=1.2 var2=0.2222 cov12=0.3;*/	
 
+  parms a0=1.66 a1_hibp=0.79 a1_chd=0.60 a1_strk=0.20
+        a1_emph=-0.19 a1_chbron=1.10 a1_chol=0.79 a1_cancer=0.97 
+        a1_diab=1.27 a1_jtpain=0.53 a1_arth=0.59 a1_asth=0.63
+        a2=-0.89 a3_hispanic=-1.07 a3_black=-0.76 a3_other=-0.61
+        a4_18=-0.25 a4_25=-0.21 a4_35=-0.19
+        a4_45=-0.10 a4_65=0.64 a4_75=0.65
+        a5_northeast=0.39 a5_midwest=0.35 a5_west=0.30
+        
+        b0=7.163325 b1_hibp=0.154339 b1_chd=0.273351 b1_strk=0.189154
+        b1_emph=0.096773 b1_chbron=0.111243 b1_chol=0.236719 b1_cancer=0.338940
+        b1_diab=0.572022 b1_jtpain=0.280115 b1_arth=0.319793 b1_asth=0.354495
+        b2=-0.256285 b3_hispanic=-0.491568 b3_black=-0.349058 b3_other=-0.278637	
+        b4_18=-0.540029 b4_25=-0.374763 b4_35=-0.262409
+        b4_45=-0.181010 b4_65=0.106329 b4_75=0.167482
+        b5_northeast=0.266691 b5_midwest=0.106443 b5_west=0.102890
+        b6=0
+        
+        simga=1		
+        
+        var1=1.2 var2=0.2222 cov12=0.3;
+	
   bounds var1 var2 cov12 >=0;
 
   *log-likelihood;
@@ -125,14 +146,14 @@ proc nlmixed data=&data;
         b6*IPDIS;  
 
   *Scale (heteroscedasticity);
-  sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
+  /*sigma = exp((d0 + d1_hibp*HIBP + d1_chd*CHD + d1_strk*STRK + 
            d1_emph*EMPH + d1_chbron*CHBRON + d1_chol*CHOL + d1_cancer*CANCER + 
            d1_diab*DIAB + d1_jtpain*JTPAIN + d1_arth*ARTH + d1_asth*ASTH +
            d2*MALE + d3_hispanic*RACE_HISPANIC + d3_black*RACE_BLACK + d3_other*RACE_OTHER +
            d4_18*AGE_18_24 + d4_25*AGE_25_34 + d4_35*AGE_35_44 +
            d4_45*AGE_45_54 + d4_65*AGE_65_74 + d4_75*AGE_75_85 +
            d5_northeast*REGION_NORTHEAST + d5_midwest*REGION_MIDWEST + d5_west*REGION_WEST +
-           d6*IPDIS)/2);   		   	
+           d6*IPDIS)/2); */		   	
 
   *for zero-cost;
   if BTOTEXP17 = 0 then loglik = log(1 - p + p*probnorm((-1 - mu) / sigma));
