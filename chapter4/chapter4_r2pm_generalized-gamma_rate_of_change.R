@@ -49,8 +49,8 @@ library(cubature)
       
       # NOTE: det function is used to calculate the Determinant of a Matrix
       # NOTE: solve function is used to calculate x when a %*% x = b
-      norm.den.ab = 1/sqrt(2*pi*det(Sigma_matrix))*
-                      exp(-0.5*t(x)%*%solve(Sigma_matrix)%*%x)
+      norm.den.ab = 1/ (2*pi*sqrt(det(Sigma_matrix)))*
+                    exp(-0.5*t(x)%*%solve(Sigma_matrix)%*%x)
       
       sigma = exp(delta/2)
       sigma_0 = exp(delta_0/2)
@@ -115,12 +115,10 @@ library(cubature)
                                 as.numeric(result_ipdis))
     }
     
-  effect_bi_gamma
-  #[1]  1887.9914  2191.4007  2731.8423   297.7216  1647.6560  1270.9469
-  #[7]  3860.4667  5859.1864  2819.0947  2202.4730  2469.7745 -1948.8029
-  #[13] -2530.9942 -1616.1052 -1595.6783 -2966.8906 -2148.9962 -1392.9392
-  #[19]  -706.1344   124.7336   640.3989  2737.0906   758.8948   816.7898
-  #[25] 14719.0061
+  round(effect_bi_gamma,0)
+  #[1]   753   874  1090   119   657   507  1540  2337  1125
+  #[10]   879   985  -777 -1010  -645  -637 -1184  -857  -556
+  #[19]  -282    50   255  1092   303   326 14719
   
 ###############################################################################    
   
@@ -128,7 +126,7 @@ library(cubature)
   #1.C.1. function for incremental effects for covariates with 2 random effects
   int2 = function(a, b, alpha_0,alpha,beta_0,beta,delta_0,delta, k, Sigma_matrix) 
     {
-    norm.den.ab = 1/sqrt(2*pi*det(Sigma_matrix))*
+    norm.den.ab = 1/(2*pi*sqrt(det(Sigma_matrix)))*
       exp(-0.5*(a^2*solve(Sigma_matrix)[1, 1]+2*a*b*solve(Sigma_matrix)[1, 2]+b^2*solve(Sigma_matrix)[2, 2]))
     
     sigma = exp(delta/2)
@@ -175,8 +173,7 @@ library(cubature)
                                as.numeric(result_ipdis))
   }
   
-  effect_bi_gamma2
-  #[1]  1887.9910  2191.3997  2731.8437   297.7217  1647.6549  1270.9461  3860.4679
-  #[8]  5859.1883  2819.0958  2202.4738  2469.7754 -1948.8020 -2530.9926 -1616.1042
-  #[15] -1595.6772 -2966.8927 -2148.9973 -1392.9398  -706.1347   124.7336   640.3991
-  #[22]  2737.0921   758.8944   816.7893 14719.0061
+  round(effect_bi_gamma2,0)
+  # [1]   753   874  1090   119   657   507  1540  2337  1125
+  # [10]   879   985  -777 -1010  -645  -637 -1184  -857  -556
+  # [19]  -282    50   255  1092   303   326 14719
