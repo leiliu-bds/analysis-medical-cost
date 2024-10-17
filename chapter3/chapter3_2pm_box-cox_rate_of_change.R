@@ -39,8 +39,8 @@ library(janitor)
 #1.B. Set up integral function
   int_box = function(v,alpha,beta,delta,gamma) 
   {
-    density = exp(alpha)/(1+exp(alpha))*1/(exp(delta/2)*sqrt(2*pi))*exp(-(v-beta)^2/2/exp(delta/2)^2)
-    eqn = (gamma*v+1)^(1/gamma)
+    density =1/(exp(delta/2)*sqrt(2*pi))*exp(-(v-beta)^2/2/exp(delta/2)^2)
+    eqn =  exp(alpha)/(1+exp(alpha))*(gamma*v+1)^(1/gamma)
     Eqn = density*eqn
     return(Eqn)
   }
