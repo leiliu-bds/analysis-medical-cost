@@ -50,7 +50,10 @@ library(cubature)
       
       # NOTE: det function is used to calculate the Determinant of a Matrix
       # NOTE: solve function is used to calculate x when a %*% x = b
-      norm.den.ab = 1/ (2*pi*sqrt(det(Sigma_matrix)))*
+      # norm.den.ab = 1/(sqrt((2*pi)^dim.r)*sqrt(det(Sigma_matrix)))*
+       #            exp(-0.5*t(x)%*%solve(Sigma_matrix)%*%x)
+
+      norm.den.ab = 1/(2*pi*sqrt(det(Sigma_matrix)))*
                     exp(-0.5*t(x)%*%solve(Sigma_matrix)%*%x)
       
       sigma = exp(delta/2)
