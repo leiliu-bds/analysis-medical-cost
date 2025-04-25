@@ -3,9 +3,12 @@
 
 ## Outlines and Locations for Codes:
 - Data Preparation:
+  - Data structure for correlated positive-cost
+    - File: [chapter4_r1pm_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter4/chapter4_r1pm_data.sas)
+    - Description: This script include the observations with correlated family id on positive cost.
   - Data structure for correlated cost
-    - File: [MEPS_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter1/MEPS_data.sas)
-    - Description: This script include the observations with correlated cost data.
+    - File: [chapter4_r2pm_data.sas](https://github.com/leiliu-bds/analysis-medical-cost/blob/main/chapter4/chapter4_r2pm_data.sas)
+    - Description: This script include the observations with correlated family id on cost data.
 
 - Modeling with different distributions:
   - Log normal distribution
@@ -30,5 +33,6 @@
 
 ## Additional Notes
 - For Log-Normal, Generalized Gamma, Log-Skew-Normal distributions and Box-Cox Transformation, scripts are available for both SAS and R:
-  - Use SAS for residuals.
+  - Use SAS for residuals. 
   - Use R for calculating the incremental effect and partial elasticity.
+  - Note that SAS can calculate incremental effect and partial elasticity as well but it ignores random effect. Meanwhile, R codes provide a more precise way to calculate incremental effect and partial elasticity by taking random effects into considerations.
