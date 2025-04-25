@@ -137,7 +137,7 @@ proc nlmixed data=&data NOSORTSUB;
     model TOTEXP17~general(loglik);
     
     *Define random effects;
-    random random_effect2 ~ normal(0,cov12) subject=FAMID; 
+    random random_effect2 ~ normal(0,var2) subject=FAMID; 
     
     *Output parameters;
     predict mean out=box_mean;
