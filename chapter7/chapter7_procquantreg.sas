@@ -89,35 +89,14 @@ run;*18575;
 **********************************************************************************;
 **********************************************************************************;
 
-*PROC QUANTREG: tau = 0.25;
-PROC QUANTREG DATA=positive algorithm=interior ci=resampling(nrep=100);
-    MODEL TOTEXP17 = HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
-						MALE RACE_HISPANIC RACE_BLACK RACE_OTHER 
-						AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85 
-						REGION_NORTHEAST REGION_MIDWEST REGION_WEST IPDIS / QUANTILE=0.25 seed=12345;
+PROC QUANTREG DATA=positive
+              ALGORITHM=INTERIOR(TOLERANCE=1E-5 KAPPA=0.999)
+              CI=RESAMPLING;
+    MODEL TOTEXP17 =
+        HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH
+        MALE RACE_HISPANIC RACE_BLACK RACE_OTHER
+        AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85
+        REGION_NORTHEAST REGION_MIDWEST REGION_WEST IPDIS
+        / QUANTILE = 0.25 0.50 0.75 0.90 0.95
+          SEED = 12345;
 RUN;
-
-
-**********************************************************************************;
-**********************************************************************************;
-
-*PROC QUANTREG: tau = 0.5;
-PROC QUANTREG DATA=positive algorithm=interior ci=resampling(nrep=100);
-    MODEL TOTEXP17 = HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
-						MALE RACE_HISPANIC RACE_BLACK RACE_OTHER 
-						AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85 
-						REGION_NORTHEAST REGION_MIDWEST REGION_WEST IPDIS / QUANTILE=0.5 seed=12345;
-RUN;
-
-
-**********************************************************************************;
-**********************************************************************************;
-
-*PROC QUANTREG: tau = 0.75;
-PROC QUANTREG DATA=positive algorithm=interior ci=resampling(nrep=100);
-    MODEL TOTEXP17 = HIBP CHD STRK EMPH CHBRON CHOL CANCER DIAB JTPAIN ARTH ASTH 
-						MALE RACE_HISPANIC RACE_BLACK RACE_OTHER 
-						AGE_18_24 AGE_25_34 AGE_35_44 AGE_45_54 AGE_65_74 AGE_75_85 
-						REGION_NORTHEAST REGION_MIDWEST REGION_WEST IPDIS / QUANTILE=0.75 seed=12345;
-RUN;
-
